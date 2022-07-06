@@ -82,6 +82,7 @@ public partial class MainViewModel : BaseViewModel, IDisposable
             if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
                 return;
             await box.ShowDialog(desktop.MainWindow);
+            return;
         }
         _processHandlerService.ChangePriorityOfProcess(_selectedProcessHandler, _selectedPriority);
         _selectedProcessHandler.PriorityClass = _selectedPriority;
