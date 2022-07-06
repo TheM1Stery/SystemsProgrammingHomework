@@ -5,7 +5,6 @@
                      mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
                      x:Class="MyTaskManager.Views.MainView"
                      x:Name="MyWindow"
-                     xmlns:vm="clr-namespace:MyTaskManager.ViewModels"
                      xmlns:local = "clr-namespace:MyTaskManager"
                      Title="MyTaskManager"
                      TransparencyLevelHint="AcrylicBlur"
@@ -40,7 +39,8 @@
         </Grid>
         <Grid Grid.Row="2" ColumnDefinitions="*, Auto">
             <TextBox Grid.Column="0" Watermark="Search process.."
-                     Text="{Binding SearchString}"/>
+                     Text="{Binding SearchString}"
+                     Margin="10 0"/>
             <Button Grid.Column="1" Command="{Binding SearchCommand}">
                 <PathIcon Data="{StaticResource search_square_regular}"/>
             </Button>

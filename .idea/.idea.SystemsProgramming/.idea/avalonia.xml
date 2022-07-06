@@ -16,6 +16,8 @@
         <entry key="MyTaskManager/MainWindow.axaml" value="MyTaskManager/MyTaskManager.csproj" />
         <entry key="MyTaskManager/Styles/Icons.axaml" value="MyTaskManager/MyTaskManager.csproj" />
         <entry key="MyTaskManager/Views/MainView.axaml" value="MyTaskManager/MyTaskManager.csproj" />
+        <entry key="TextCipher/App.axaml" value="TextCipher/TextCipher.csproj" />
+        <entry key="TextCipher/MainWindow.axaml" value="TextCipher/TextCipher.csproj" />
       </map>
     </option>
   </component>
