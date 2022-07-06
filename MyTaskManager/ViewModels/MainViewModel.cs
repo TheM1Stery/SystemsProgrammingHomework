@@ -79,11 +79,9 @@ public partial class MainViewModel : BaseViewModel, IDisposable
             var box = MessageBoxManager.GetMessageBoxStandardWindow("Error", "Cannot change the priority of this process.\n" +
                                                                    "You don't have access", ButtonEnum.Ok, Icon.Error,
                 WindowStartupLocation.CenterOwner);
-            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                await box.ShowDialog(desktop.MainWindow);
+            if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
                 return;
-            }
+            await box.ShowDialog(desktop.MainWindow);
         }
         _processHandlerService.ChangePriorityOfProcess(_selectedProcessHandler, _selectedPriority);
         _selectedProcessHandler.PriorityClass = _selectedPriority;
