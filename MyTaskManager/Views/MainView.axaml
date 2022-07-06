@@ -1,19 +1,31 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
-        x:Class="MyTaskManager.Views.MainView"
-        xmlns:vm="clr-namespace:MyTaskManager.ViewModels"
-        Title="MyTaskManager"
-        TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True">
-    <Design.DataContext>
-        <vm:MainViewModel/>
-    </Design.DataContext>
-    <Grid>
-        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+                     x:Class="MyTaskManager.Views.MainView"
+                     x:Name="MyWindow"
+                     xmlns:vm="clr-namespace:MyTaskManager.ViewModels"
+                     xmlns:local = "clr-namespace:MyTaskManager"
+                     Title="MyTaskManager"
+                     TransparencyLevelHint="AcrylicBlur"
+                     Background="Transparent"
+                     ExtendClientAreaToDecorationsHint="True"
+                     d:DataContext="{x:Static local:DesignData.ExampleMain}"
+                     Height="800" Width="600">
+    <NativeMenu.Menu> 
+        <NativeMenu> 
+            <NativeMenuItem Header="_File"> 
+                <NativeMenu> 
+                    <NativeMenuItem Header="Start a new process" Command="{Binding OpenFileDialogCommand}"/> 
+                    <NativeMenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                    <NativeMenuItem Header="Exit" Command="{Binding ExitCommand}"/> 
+                </NativeMenu> 
+            </NativeMenuItem> 
+        </NativeMenu> 
+    </NativeMenu.Menu> 
+    <Grid RowDefinitions="0.160*,0.3*,0.2*, 5*">
+        <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="3" IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial BackgroundSource="Digger"
                                              TintColor="Black"
@@ -21,8 +33,38 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <DataGrid>
-            
+        <TextBlock Grid.Row="0" Margin="10 10 0 0" Text=
+                   "{Binding ElementName=MyWindow, Path=Title}"/>
+        <Grid Grid.Row="1" Background="Transparent">
+            <NativeMenuBar HorizontalAlignment="Left" Margin="5"/>
+        </Grid>
+        <Grid Grid.Row="2" ColumnDefinitions="*, Auto">
+            <TextBox Grid.Column="0" Watermark="Search process.."
+                     Text="{Binding SearchString}"/>
+            <Button Grid.Column="1" Command="{Binding SearchCommand}">
+                <PathIcon Data="{StaticResource search_square_regular}"/>
+            </Button>
+        </Grid>
+        <DataGrid Grid.Row="3" Items="{Binding ProcessInfos}" 
+                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedProcessHandler}"
+                  IsReadOnly="True"
+                  Margin="0 5 0 0">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Set Priority" Items="{Binding ProcessPriorities}" 
+                              SelectedItem="{Binding  SelectedPriority}"
+                              Command="{Binding ChangePriorityCommand}"/>
+                    <MenuItem Header="Kill" Command="{Binding KillCommand}"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="PID" Binding="{Binding ProcessId}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding ProcessName}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding CurrentStatus}"/>
+                <DataGridTextColumn Header="Priority" Binding="{Binding PriorityClass}"/>
+            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>
+ 
