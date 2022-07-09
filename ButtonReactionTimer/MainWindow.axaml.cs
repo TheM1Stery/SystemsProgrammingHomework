@@ -7,6 +7,7 @@ namespace ButtonReactionTimer
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
     }
 }

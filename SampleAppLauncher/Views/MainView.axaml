@@ -23,18 +23,19 @@
         </ExperimentalAcrylicBorder>
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="First number: "/>
-            <NumericUpDown Text="{Binding FirstNumber}" Margin="0 0 0 10"
-                           Increment="{Binding Increment}"/>
+            <TextBox Text="{Binding FirstNumber}"
+                           Margin="0 0 0 10"
+                     
+                           Watermark="Enter first number..."/>
             <TextBlock Text="Second number: "/>
-            <NumericUpDown Text="{Binding SecondNumber}"
-                           Increment="{Binding Increment}"
+            <TextBox Text="{Binding SecondNumber}"
                            Watermark="Enter second number..." Margin="0 0 0 10"/>
             <ComboBox Items="{Binding Operators}" PlaceholderText="Select an operation..." 
                       IsTextSearchEnabled="False" SelectedItem="{Binding SelectedOperator}"/>
             <CheckBox IsChecked="{Binding IsDebugChecked}" Content="Debug Mode"/>
             <WrapPanel IsVisible="{Binding IsDebugChecked}" 
                        ToolTip.Tip="If the path is not specified, the logs will be displayed in the console">
-                <TextBox Text="{Binding Path}" Width="200"/>
+                <TextBox Text="{Binding LogPath}" Width="200"/>
                 <Button Command="{Binding SelectPathCommand}">
                     <PathIcon Data="{StaticResource FolderOpenRegular}"/>
                 </Button>
