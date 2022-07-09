@@ -20,7 +20,10 @@ namespace TextCipher
             
             container.Register<MainWindow>(Lifestyle.Singleton);
             container.Register<MainViewModel>(Lifestyle.Singleton);
-            container.RegisterInitializer<MainWindow>(x => x.DataContext = container.GetInstance<MainViewModel>());
+            
+            // property injection
+            container.RegisterInitializer<MainWindow>(x => x.DataContext = 
+                container.GetInstance<MainViewModel>());
             
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {

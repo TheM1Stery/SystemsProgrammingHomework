@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonReactionTimer", "Butt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextCipher", "TextCipher\TextCipher.csproj", "{865CC884-D9BB-4A01-BB40-B3C02CAC5D52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAppLauncher", "SampleAppLauncher\SampleAppLauncher.csproj", "{3FB3525A-1497-47AE-94A5-36668A4AD70B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{AF9BA510-C659-431A-A691-58F1ADF317C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{865CC884-D9BB-4A01-BB40-B3C02CAC5D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{865CC884-D9BB-4A01-BB40-B3C02CAC5D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{865CC884-D9BB-4A01-BB40-B3C02CAC5D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB3525A-1497-47AE-94A5-36668A4AD70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB3525A-1497-47AE-94A5-36668A4AD70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB3525A-1497-47AE-94A5-36668A4AD70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB3525A-1497-47AE-94A5-36668A4AD70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9BA510-C659-431A-A691-58F1ADF317C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9BA510-C659-431A-A691-58F1ADF317C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9BA510-C659-431A-A691-58F1ADF317C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9BA510-C659-431A-A691-58F1ADF317C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

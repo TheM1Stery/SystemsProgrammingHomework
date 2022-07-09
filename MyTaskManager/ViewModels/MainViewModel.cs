@@ -17,10 +17,11 @@ using MyTaskManager.Services;
 
 namespace MyTaskManager.ViewModels;
 
-public partial class MainViewModel : BaseViewModel, IDisposable
+public partial class MainViewModel : BaseViewModel, IDisposable, IWindowCloser
 {
     private readonly IProcessHandlerService _processHandlerService;
     private readonly IProcessChooser _processChooser;
+    private readonly IMessageBoxShower _messageBox;
 
     [ObservableProperty]
     private ObservableCollection<ProcessMainInfo>? _processInfos;
@@ -37,12 +38,15 @@ public partial class MainViewModel : BaseViewModel, IDisposable
     [ObservableProperty]
     private string? _searchString;
     
-    
+    public Action? Close { get; set; }
 
-    public MainViewModel(IProcessHandlerService processHandlerService, IProcessChooser processChooser)
+    
+    public MainViewModel(IProcessHandlerService processHandlerService, IProcessChooser processChooser,
+        IMessageBoxShower messageBox)
     {
         _processHandlerService = processHandlerService;
         _processChooser = processChooser;
+        _messageBox = messageBox;
         ProcessInfos = new ObservableCollection<ProcessMainInfo>(_processHandlerService.GetAllProcesses()
             .OrderBy(x => x.ProcessName));
         _processPriorities = new ObservableCollection<ProcessPriorityClass>();
@@ -75,12 +79,8 @@ public partial class MainViewModel : BaseViewModel, IDisposable
             return;
         if (_selectedProcessHandler.PriorityClass is null)
         {
-            var box = MessageBoxManager.GetMessageBoxStandardWindow("Error", "Cannot change the priority of this process.\n" +
-                                                                   "You don't have access", ButtonEnum.Ok, Icon.Error,
-                WindowStartupLocation.CenterOwner);
-            if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
-                return;
-            await box.ShowDialog(desktop.MainWindow);
+            await _messageBox.ShowMessageAsync("Cannot change the priority of this process.\n" + "You don't have access", 
+                "Error", Icon.Error);
             return;
         }
         _processHandlerService.ChangePriorityOfProcess(_selectedProcessHandler, _selectedPriority);
@@ -101,12 +101,7 @@ public partial class MainViewModel : BaseViewModel, IDisposable
         }
         catch (Exception)
         {
-            var box = MessageBoxManager.GetMessageBoxStandardWindow("Error", "Couldn't start the process", 
-                ButtonEnum.Ok, Icon.Error, WindowStartupLocation.CenterOwner);
-            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                await box.ShowDialog(desktop.MainWindow);
-            }
+            await _messageBox.ShowMessageAsync("Couldn't start process", "Error", Icon.Error);
         }
     }
     
@@ -119,22 +114,26 @@ public partial class MainViewModel : BaseViewModel, IDisposable
     }
 
     [RelayCommand]
-    private void Kill()
+    private async Task Kill()
     {
         if (_selectedProcessHandler is null)
             return;
-        _processHandlerService.KillProcess(_selectedProcessHandler);
-        Refresh();
+        try
+        {
+            _processHandlerService.KillProcess(_selectedProcessHandler);
+            Refresh();
+        }
+        catch (Exception)
+        {
+            await _messageBox.ShowMessageAsync("Couldn't kill the process", "Error", Icon.Error);
+        }
     }
     
 
     [RelayCommand]
     private void Exit()
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            desktop.MainWindow.Close();
-        }
+        Close?.Invoke();
     }
     
     public void Dispose()

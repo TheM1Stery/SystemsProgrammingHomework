@@ -2,6 +2,7 @@ using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using MyTaskManager.Services;
 using MyTaskManager.ViewModels;
 
 
@@ -12,6 +13,7 @@ namespace MyTaskManager.Views
         public MainView()
         {
             InitializeComponent();
+            
         }
     }
 }

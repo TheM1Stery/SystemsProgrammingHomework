@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SampleAppLauncher"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        MinWidth="800" MinHeight="600" MaxWidth="800" MaxHeight="600"
+        x:Class="SampleAppLauncher.Views.MainView"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaToDecorationsHint="True"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur"
+        d:DataContext="{x:Static local:DesignData.ExampleMain}"
+        Title="SampleAppLauncher">
+    <Grid RowDefinitions="*, 0.1*">
+        <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial BackgroundSource="Digger"
+                                             TintColor="Black"
+                                             TintOpacity="1"
+                                             MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="First number: "/>
+            <NumericUpDown Text="{Binding FirstNumber}" Margin="0 0 0 10"
+                           Increment="{Binding Increment}"/>
+            <TextBlock Text="Second number: "/>
+            <NumericUpDown Text="{Binding SecondNumber}"
+                           Increment="{Binding Increment}"
+                           Watermark="Enter second number..." Margin="0 0 0 10"/>
+            <ComboBox Items="{Binding Operators}" PlaceholderText="Select an operation..." 
+                      IsTextSearchEnabled="False" SelectedItem="{Binding SelectedOperator}"/>
+            <CheckBox IsChecked="{Binding IsDebugChecked}" Content="Debug Mode"/>
+            <WrapPanel IsVisible="{Binding IsDebugChecked}" 
+                       ToolTip.Tip="If the path is not specified, the logs will be displayed in the console">
+                <TextBox Text="{Binding Path}" Width="200"/>
+                <Button Command="{Binding SelectPathCommand}">
+                    <PathIcon Data="{StaticResource FolderOpenRegular}"/>
+                </Button>
+            </WrapPanel>
+        </StackPanel>
+        <WrapPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Start the program" VerticalAlignment="Center" Command="{Binding StartCommand}"/>
+            <Button Content="Exit" Command="{Binding ExitCommand}" Margin="5 0 0 0 "/>
+        </WrapPanel>
+    </Grid>
+</Window>

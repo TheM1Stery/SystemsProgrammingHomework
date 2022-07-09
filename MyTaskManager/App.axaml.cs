@@ -21,16 +21,21 @@ namespace MyTaskManager
         {
             var container = new Container();
 
+            container.Register<MainView>(Lifestyle.Singleton);
+            container.RegisterInitializer<MainView>(x =>
+            {
+                var vm = container.GetInstance<MainViewModel>();
+                vm.Close += x.Close;
+                x.DataContext = vm;
+            });
             container.Register<MainViewModel>(Lifestyle.Singleton);
             container.Register<IProcessHandlerService, ProcessHandlerService>(Lifestyle.Singleton);
             container.Register<IProcessChooser, ProcessChooser>(Lifestyle.Singleton);
+            container.Register<IMessageBoxShower, MessageBoxShower>(Lifestyle.Singleton);
             
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainView
-                {
-                    DataContext = container.GetInstance<MainViewModel>()
-                };
+                desktop.MainWindow = container.GetInstance<MainView>();
             }
 
             base.OnFrameworkInitializationCompleted();
