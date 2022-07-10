@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MessageBox.Avalonia;
 using MessageBox.Avalonia.Enums;
 using SampleAppLauncher.Services;
+using Path = System.IO.Path;
 
 namespace SampleAppLauncher.ViewModels;
 
@@ -72,8 +72,8 @@ public partial class MainViewModel : BaseViewModel, IWindowCloser
         {
             if (_logPath is not null)
             {
-                var args = arguments + $"{_logPath}";
-                if (!Uri.IsWellFormedUriString(_logPath, UriKind.Absolute))
+                var args = arguments + $" {_logPath}";
+                if (!Path.IsPathFullyQualified(_logPath))
                 {
                     await _messageBox.ShowMessageAsync("The path was not valid, console log will be used", 
                         "Warning", Icon.Warning);
