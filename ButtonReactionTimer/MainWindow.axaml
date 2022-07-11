@@ -5,18 +5,30 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ButtonReactionTimer.MainWindow"
         xmlns:local = "clr-namespace:ButtonReactionTimer"
-        Title="ButtonReactionTimer">
+        Title="ButtonReactionTimer"
+        ExtendClientAreaToDecorationsHint="True">
     <Design.DataContext>
         <local:MainViewModel/>
     </Design.DataContext>
     <Panel>
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" >
             <TextBlock>Press the button when it lights green. You have 5 attempts</TextBlock>
             <WrapPanel>
                 <TextBlock Text="Attempt: "/>
                 <TextBlock Text="{Binding Count}"/>
             </WrapPanel>
-            <Button Command="{Binding ButtonPressCommand}"></Button>
+            <Button Content="Start the clicking process" Command="{Binding StartCommand}"/>
+            <TextBlock Text="{Binding AverageReaction}"/>
         </StackPanel>
+        <Button Command="{Binding ButtonPressCommand}" Content="Press me when i'm greeen!"
+                Background="{Binding ButtonColor}"
+                HorizontalAlignment="Center" IsEnabled="{Binding IsButtonEnabled}">
+            <Button.Styles>
+                <Style Selector="Button:pointerover /template/ ContentPresenter">
+                    <Setter Property="Background" Value="{Binding ButtonColor}"/>
+                </Style>
+            </Button.Styles>
+        </Button>
+        <DataGrid AutoGenerateColumns="True" Items="" HorizontalAlignment="Right" VerticalAlignment="Center"/>
     </Panel>
 </Window>
