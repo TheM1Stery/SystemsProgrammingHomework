@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -14,7 +15,6 @@ namespace ButtonReactionTimer;
 [ObservableObject]
 public partial class MainViewModel
 {
-    private readonly IMessageBoxShower? _messageBox;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(AverageReaction))]
@@ -26,60 +26,83 @@ public partial class MainViewModel
     
     
     [ObservableProperty]
-    private bool _isButtonEnabled;
+    private bool _isReactionButtonEnabled;
+
+    [ObservableProperty]
+    private bool _isStartButtonEnabled;
 
 
-    public string AverageReaction => $"{_sum / _count} ms";
+    private bool _isButtonPressed;
 
 
+    public string AverageReaction => $"Average reaction time: {_sum / _count} ms";
+
+
+    [ObservableProperty]
+    private string? _lastCount;
+
+
+    private List<Thread> _threads;
 
     private double _sum;
-
     
-    
-    
-    
-    public MainViewModel(IMessageBoxShower messageBox)
+    public MainViewModel()
     {
-        _messageBox = messageBox;
         ButtonColor = Brushes.Red;
-        IsButtonEnabled = false;
+        IsReactionButtonEnabled = false;
+        IsStartButtonEnabled = true;
+        _threads = new List<Thread>();
     }
-
-    public MainViewModel() { } // needed for Design.DataContext in MainWindow.axaml.cs
-
-
+    
+    
     [RelayCommand]
     private void Start()
     {
-        
-        IsButtonEnabled = true;
-        var timer = new Thread(() =>
+        IsReactionButtonEnabled = true;
+        IsStartButtonEnabled = false;
+        _threads.Clear();
+        for (var i = 0; i < 5; i++)
         {
-            Thread.Sleep(1000);
-            ButtonColor = Brushes.Green;
-            var start = DateTime.Now;
-            var end = start;
-            while (_isButtonEnabled)
+            _threads.Add(new Thread(() =>
             {
-                end = DateTime.Now;
-                Thread.Sleep(1000);
-            }
-            _sum += (end - start).TotalMilliseconds;
-            Count++;
-            ButtonColor = Brushes.Red;
-        })
+                Thread.Sleep(Random.Shared.Next(500, 3000));
+                ButtonColor = Brushes.Green;
+                var start = DateTime.Now;
+                var end = start;
+                while (!_isButtonPressed)
+                {
+                    end = DateTime.Now;
+                    Thread.Sleep(1000);
+                }
+                var timeSpan = end - start;
+                _sum += timeSpan.TotalMilliseconds;
+                LastCount = $"Last Attempt: {timeSpan.TotalMilliseconds} ms";
+                Count++;
+                ButtonColor = Brushes.Red;
+                _isButtonPressed = false;
+            })
+            {
+                IsBackground = true
+            });
+        }
+        var thread = new Thread(() =>
         {
-            IsBackground = true
-        };
-        
-        timer.Start();
+            foreach (var item in _threads)
+            {
+                item.Start();
+                item.Join();
+            }
+            IsStartButtonEnabled = true;
+        });
+        thread.Start();
     }
     
 
     [RelayCommand]
     private void ButtonPress()
     {
-        IsButtonEnabled = false;
+        if (Equals(ButtonColor, Brushes.Red))
+            return;
+        _isButtonPressed = true;
     }
 }

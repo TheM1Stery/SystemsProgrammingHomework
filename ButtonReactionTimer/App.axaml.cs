@@ -17,7 +17,7 @@ namespace ButtonReactionTimer
             {
                 desktop.MainWindow = new MainWindow()
                 {
-                    DataContext = new MainViewModel(new MessageBoxShower())
+                    DataContext = new MainViewModel()
                 };
             }
             base.OnFrameworkInitializationCompleted();

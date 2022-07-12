@@ -17,18 +17,19 @@
                 <TextBlock Text="Attempt: "/>
                 <TextBlock Text="{Binding Count}"/>
             </WrapPanel>
-            <Button Content="Start the clicking process" Command="{Binding StartCommand}"/>
+            <Button Content="Start the clicking process" Command="{Binding StartCommand}" 
+                    IsEnabled="{Binding IsStartButtonEnabled}"/>
             <TextBlock Text="{Binding AverageReaction}"/>
         </StackPanel>
         <Button Command="{Binding ButtonPressCommand}" Content="Press me when i'm greeen!"
                 Background="{Binding ButtonColor}"
-                HorizontalAlignment="Center" IsEnabled="{Binding IsButtonEnabled}">
+                HorizontalAlignment="Center" IsEnabled="{Binding IsReactionButtonEnabled}">
             <Button.Styles>
                 <Style Selector="Button:pointerover /template/ ContentPresenter">
                     <Setter Property="Background" Value="{Binding ButtonColor}"/>
                 </Style>
             </Button.Styles>
         </Button>
-        <DataGrid AutoGenerateColumns="True" Items="" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBlock Text="{Binding LastCount}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
     </Panel>
 </Window>
