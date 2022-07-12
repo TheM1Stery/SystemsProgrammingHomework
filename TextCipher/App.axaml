@@ -1,11 +1,12 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="TextCipher.App"
-             xmlns:local="clr-namespace:TextCipher">
+             xmlns:local="clr-namespace:TextCipher"
+             xmlns:styling="clr-namespace:FluentAvalonia.Styling;assembly=FluentAvalonia">
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
     <Application.Styles>
-        <FluentTheme Mode="Dark"/>
+        <styling:FluentAvaloniaTheme RequestedTheme="Dark" PreferSystemTheme="False" CustomAccentColor="Purple" />
     </Application.Styles>
 </Application>

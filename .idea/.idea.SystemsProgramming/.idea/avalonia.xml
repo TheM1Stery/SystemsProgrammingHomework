@@ -22,6 +22,8 @@
         <entry key="SampleAppLauncher/Views/MainView.axaml" value="SampleAppLauncher/SampleAppLauncher.csproj" />
         <entry key="TextCipher/App.axaml" value="TextCipher/TextCipher.csproj" />
         <entry key="TextCipher/MainWindow.axaml" value="TextCipher/TextCipher.csproj" />
+        <entry key="TextCipher/Views/MainView.axaml" value="TextCipher/TextCipher.csproj" />
+        <entry key="TextCipher/Views/TabInfoView.axaml" value="TextCipher/TextCipher.csproj" />
       </map>
     </option>
   </component>

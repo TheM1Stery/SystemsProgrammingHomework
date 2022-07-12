@@ -1,0 +1,17 @@
+using Avalonia;
+using Avalonia.Controls;
+using FluentAvalonia.Styling;
+using FluentAvalonia.UI.Controls;
+
+namespace TextCipher.Views
+{
+    public partial class MainView : CoreWindow
+    {
+        public MainView()
+        {
+            InitializeComponent();
+            var thm = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>();
+            thm?.ForceWin32WindowToTheme(this); // this method is a lifesaver
+        }
+    }
+}
