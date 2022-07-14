@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using SimpleInjector;
+using TextCipher.Factories;
 using TextCipher.Services;
 using TextCipher.ViewModels;
 using TextCipher.Views;
@@ -29,6 +30,7 @@ namespace TextCipher
             
             container.Register<IFileSelector, FileSelector>(Lifestyle.Singleton);
             container.Register<ITextFileGetterService, TextFileGetterService>(Lifestyle.Singleton);
+            container.Register<ITabFactory, TabFactory>(Lifestyle.Singleton);
             
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {

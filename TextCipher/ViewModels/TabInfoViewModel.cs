@@ -11,8 +11,8 @@ public partial class TabInfoViewModel : BaseViewModel
     [ObservableProperty]
     private int _progress;
     
-    public TabInfoViewModel()
+    public TabInfoViewModel(string message)
     {
-        
+        Message = message;
     }
 }

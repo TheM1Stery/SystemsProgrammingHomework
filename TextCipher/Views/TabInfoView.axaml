@@ -5,15 +5,14 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="clr-namespace:TextCipher.ViewModels"
              x:Class="TextCipher.Views.TabInfoView"
-             xmlns:ui="using:FluentAvalonia.UI.Controls"
-             xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
              x:DataType="vm:TabInfoViewModel">
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto,Auto">
         <TextBox Grid.Row="0" MinHeight="200"
-                 TextWrapping="Wrap" AcceptsReturn="True"
+                 IsReadOnly="True" TextWrapping="Wrap"
                  Text="{CompiledBinding Message}" Margin="3"
-                 FontSize="24"/>
-        <ProgressBar Grid.Row="1" MinHeight="20" Value="{CompiledBinding Progress}"
-                     ShowProgressText="True"/>
+                 FontSize="16"/>
+        <Separator Grid.Row="1" MinHeight="10"/>
+        <ProgressBar Grid.Row="2" MinHeight="20" Value="{CompiledBinding Progress}"
+                     ShowProgressText="True" Margin="2"/>
     </Grid>
 </UserControl>
