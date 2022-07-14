@@ -2,14 +2,17 @@
 
 namespace TextCipher.ViewModels;
 
-public partial class TabInfoViewModel : BaseTabInfoViewModel
+public partial class TabInfoViewModel : BaseViewModel
 {
 
     [ObservableProperty]
     private string? _message;
     
-    public TabInfoViewModel(string message)
+    [ObservableProperty]
+    private int _progress;
+    
+    public TabInfoViewModel()
     {
-        Message = message;
+        
     }
 }

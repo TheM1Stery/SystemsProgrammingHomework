@@ -5,14 +5,16 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         xmlns:local="clr-namespace:TextCipher"
         xmlns:models="clr-namespace:TextCipher.Models"
+        xmlns:vm="clr-namespace:TextCipher.ViewModels"
         x:Class="TextCipher.Views.MainView"
-        d:DataContext="{x:Static local:DesignData.MainExample}"
         xmlns:ui="using:FluentAvalonia.UI.Controls"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        Title="{Binding Title}"
-        x:Name="Window">
-    <Grid RowDefinitions="0.0425*, *">
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+        Title="{CompiledBinding Title}"
+        x:DataType="vm:MainViewModel"><!-- needed for CompiledBinding -->
+    <Grid RowDefinitions="0.0425*, 3*">
         <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial BackgroundSource="Digger"
@@ -21,14 +23,21 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <ui:TabView Grid.Row="1" TabItems="{Binding Tabs}">
-            
-            <ui:TabView.DataTemplates>
-                <local:TabViewLocator/>
-            </ui:TabView.DataTemplates>
+        <ui:TabView Grid.Row="1" TabItems="{CompiledBinding Tabs}" 
+                    CloseButtonOverlayMode="OnPointerOver"
+                    AddTabButtonCommand="{CompiledBinding AddTabCommand}"
+                    IsAddTabButtonVisible="True">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="TabCloseRequested">
+                    <ia:InvokeCommandAction Command="{CompiledBinding DeleteTabCommand}" 
+                                            PassEventArgsToCommand="True"/>
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
             <ui:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="models:TabItem">
-                    <ui:TabViewItem Content="{Binding Content}" Header="{Binding Header}"/>
+                    <ui:TabViewItem Header="{CompiledBinding Header}"
+                                    Content="{CompiledBinding Content}">
+                    </ui:TabViewItem>
                 </DataTemplate>
             </ui:TabView.TabItemTemplate>
         </ui:TabView>

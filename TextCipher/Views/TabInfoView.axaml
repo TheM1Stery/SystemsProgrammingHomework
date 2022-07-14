@@ -3,11 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             xmlns:local="clr-namespace:TextCipher"
+             xmlns:vm="clr-namespace:TextCipher.ViewModels"
              x:Class="TextCipher.Views.TabInfoView"
-             d:DataContext="{x:Static local:DesignData.TabExample}">
-        
-    <Grid>
-        <TextBlock Text="{Binding Message}"/>
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+             x:DataType="vm:TabInfoViewModel">
+    <Grid RowDefinitions="*,Auto">
+        <TextBox Grid.Row="0" MinHeight="200"
+                 TextWrapping="Wrap" AcceptsReturn="True"
+                 Text="{CompiledBinding Message}" Margin="3"
+                 FontSize="24"/>
+        <ProgressBar Grid.Row="1" MinHeight="20" Value="{CompiledBinding Progress}"
+                     ShowProgressText="True"/>
     </Grid>
 </UserControl>

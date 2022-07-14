@@ -68,13 +68,11 @@ public partial class MainViewModel
                 Thread.Sleep(Random.Shared.Next(500, 3000));
                 ButtonColor = Brushes.Green;
                 var start = DateTime.Now;
-                var end = start;
                 while (!_isButtonPressed)
                 {
-                    end = DateTime.Now;
-                    Thread.Sleep(1000);
+                    Thread.Sleep(1);
                 }
-                var timeSpan = end - start;
+                var timeSpan = DateTime.Now - start;
                 _sum += timeSpan.TotalMilliseconds;
                 LastCount = $"Last Attempt: {timeSpan.TotalMilliseconds} ms";
                 Count++;

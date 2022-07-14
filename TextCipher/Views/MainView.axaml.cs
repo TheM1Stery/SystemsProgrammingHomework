@@ -10,6 +10,7 @@ namespace TextCipher.Views
         public MainView()
         {
             InitializeComponent();
+            this.AttachDevTools(); // for debugging purposes, press f12 to see it 
             var thm = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>();
             thm?.ForceWin32WindowToTheme(this); // this method is a lifesaver
         }
