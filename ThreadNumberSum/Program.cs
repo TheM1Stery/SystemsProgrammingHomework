@@ -1,35 +1,53 @@
 ﻿var number = 0;
-void Callback()
+
+var resetEvent = new AutoResetEvent(false);
+var resetEventSecond = new AutoResetEvent(false);
+void Operation()
 {
     number += 500_000;
     Console.WriteLine($"{Thread.CurrentThread.Name}");
 }
 
-
+// this is this the better solution :)
 while (number != 6_000_000)
 {
-    var thread1 = new Thread(Callback)
+    var thread1 = new Thread(() =>
+    {
+        Operation();
+        resetEvent.Set();
+    })
     {
         IsBackground = true,
         Name = "Thread1"
     };
-    var thread2 = new Thread(Callback)
+    var thread2 = new Thread(() =>
+    {
+        resetEventSecond.WaitOne(); // wait for the second thread to finish.
+        Operation();
+    })
     {
         IsBackground = true,
         Name = "Thread2"
     };
-    var thread3 = new Thread(Callback)
+    var thread3 = new Thread(() =>
+    {
+        resetEvent.WaitOne(); // wait for the first thread to finish
+        Operation();
+        resetEventSecond.Set();
+    })
     {
         IsBackground = true,
         Name = "Thread3"
     };
     thread1.Start();
-    thread1.Join();
-    thread3.Start();
-    thread3.Join();
     thread2.Start();
+    thread3.Start();
+
+    thread1.Join();
     thread2.Join();
+    thread3.Join();
 }
+
 
 Console.WriteLine($"Result: {number}");
 
