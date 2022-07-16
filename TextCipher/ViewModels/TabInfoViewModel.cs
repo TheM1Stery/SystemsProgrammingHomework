@@ -15,7 +15,6 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     private readonly ITextFileGetterService _textFileGetterService;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(MessageLength))]
     private string? _message;
     
     [ObservableProperty]
@@ -28,10 +27,8 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
 
     private int _key;
     
-    public int MessageLength => Message?.Length ?? default;
-
-
-    private void ThreadMethod()
+    
+    private void ThreadMethod(object? state)
     {
         if (_from is null || _to is null) 
             return;
@@ -56,14 +53,10 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
         _from = new StreamReader(new FileStream(message.Value.FromPath, FileMode.Open));
         _to = new StreamWriter(new FileStream(message.Value.ToPath, FileMode.OpenOrCreate));
         _key = message.Value.Key;
+        ThreadPool.QueueUserWorkItem(ThreadMethod);
         _encryptionService.Encrypting += () =>
         {
             Progress++;
         };
-        var encryptingThread = new Thread(ThreadMethod)
-        {
-            IsBackground = true
-        };
-        encryptingThread.Start();
     }
 }

@@ -35,7 +35,6 @@
         <ProgressBar MinHeight="15"
                      VerticalAlignment="Bottom"
                      Margin="2"
-                     Maximum="{CompiledBinding MessageLength}"
                      models:ProgressBarWorkaround.Value="{CompiledBinding Progress}">
         </ProgressBar>
     </Panel>
