@@ -15,6 +15,7 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     private readonly ITextFileGetterService _textFileGetterService;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageLength))]
     private string? _message;
     
     [ObservableProperty]
@@ -27,7 +28,7 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
 
     private int _key;
     
-    private readonly Thread _encryptingThread;
+    public int MessageLength => Message?.Length ?? default;
 
 
     private void ThreadMethod()
@@ -44,33 +45,25 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
         _encryptionService = encryptionService;
         _textFileGetterService = textFileGetterService;
         WeakReferenceMessenger.Default.Register(this);
-        _encryptingThread = new Thread(ThreadMethod)
-        {
-            IsBackground = true
-        };
     }
 
     public async void Receive(ValueChangedMessage<EncryptionArgs> message)
     {
         if (message.Value.FromPath is null || message.Value.ToPath is null)
             return;
+        WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<EncryptionArgs>>(this);
         Message = await _textFileGetterService.GetText(message.Value.FromPath);
         _from = new StreamReader(new FileStream(message.Value.FromPath, FileMode.Open));
         _to = new StreamWriter(new FileStream(message.Value.ToPath, FileMode.OpenOrCreate));
         _key = message.Value.Key;
-        var onePercent = (int)(Message.Length * 0.01);
-        var counter = 0;
         _encryptionService.Encrypting += () =>
         {
-            if (counter != onePercent)
-            {
-                counter++;
-                return;
-            }
             Progress++;
-            counter = 0;
         };
-        _encryptingThread.Start();
-        WeakReferenceMessenger.Default.Unregister<EncryptionArgs>(this);
+        var encryptingThread = new Thread(ThreadMethod)
+        {
+            IsBackground = true
+        };
+        encryptingThread.Start();
     }
 }
