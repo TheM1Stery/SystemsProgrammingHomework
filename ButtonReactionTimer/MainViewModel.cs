@@ -70,7 +70,6 @@ public partial class MainViewModel
                 var start = DateTime.Now;
                 while (!_isButtonPressed)
                 {
-                    Thread.Sleep(1);
                 }
                 var timeSpan = DateTime.Now - start;
                 _sum += timeSpan.TotalMilliseconds;
@@ -80,7 +79,7 @@ public partial class MainViewModel
                 _isButtonPressed = false;
             })
             {
-                IsBackground = true
+                IsBackground = true,
             });
         }
         var thread = new Thread(() =>

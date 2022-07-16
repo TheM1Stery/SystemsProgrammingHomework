@@ -13,8 +13,8 @@
         xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
         xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
         Title="{CompiledBinding Title}"
-        x:DataType="vm:MainViewModel"><!-- needed for CompiledBinding -->
-    <Grid RowDefinitions="0.0425*, 3*">
+        x:DataType="vm:MainViewModel"><!-- x:DataType is needed for CompiledBinding -->
+    <Grid RowDefinitions="0.0625*,3*">
         <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial BackgroundSource="Digger"
@@ -23,6 +23,7 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
+        
         <ui:TabView Grid.Row="1" TabItems="{CompiledBinding Tabs}" 
                     CloseButtonOverlayMode="OnPointerOver"
                     AddTabButtonCommand="{CompiledBinding AddTabCommand}"

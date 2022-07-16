@@ -4,5 +4,5 @@ namespace TextCipher.Factories;
 
 public interface ITabFactory
 {
-    public TabInfoViewModel Create(string message);
+    public TabInfoViewModel Create();
 }

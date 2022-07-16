@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvenNumbers", "EvenNumbers\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadNumberSum", "ThreadNumberSum\ThreadNumberSum.csproj", "{59BAE807-6D8A-4342-A6B9-2D1CF5F90DC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadedFileReader", "MultiThreadedFileReader\MultiThreadedFileReader.csproj", "{D280FB7C-06DB-48B8-A31D-299DF1FD2EC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{59BAE807-6D8A-4342-A6B9-2D1CF5F90DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59BAE807-6D8A-4342-A6B9-2D1CF5F90DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59BAE807-6D8A-4342-A6B9-2D1CF5F90DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D280FB7C-06DB-48B8-A31D-299DF1FD2EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D280FB7C-06DB-48B8-A31D-299DF1FD2EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D280FB7C-06DB-48B8-A31D-299DF1FD2EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D280FB7C-06DB-48B8-A31D-299DF1FD2EC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

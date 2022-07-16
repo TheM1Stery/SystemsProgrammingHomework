@@ -1,16 +1,21 @@
-﻿using TextCipher.ViewModels;
+﻿using TextCipher.Services;
+using TextCipher.ViewModels;
 
 namespace TextCipher.Factories;
 
 public class TabFactory : ITabFactory
 {
-    public TabFactory()
+    private readonly IEncryptionService _encryptionService;
+    private readonly ITextFileGetterService _textFileGetterService;
+
+    public TabFactory(IEncryptionService encryptionService, ITextFileGetterService textFileGetterService)
     {
-        
+        _encryptionService = encryptionService;
+        _textFileGetterService = textFileGetterService;
     }
     
-    public TabInfoViewModel Create(string message)
+    public TabInfoViewModel Create()
     {
-        return new TabInfoViewModel(message);
+        return new TabInfoViewModel(_encryptionService, _textFileGetterService);
     }
 }

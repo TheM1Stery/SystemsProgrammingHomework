@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using FluentAvalonia.UI.Controls;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Enums;
 using TextCipher.Factories;
+using TextCipher.Models;
 using TextCipher.Services;
 using TabItem = TextCipher.Models.TabItem;
 
@@ -17,7 +21,6 @@ namespace TextCipher.ViewModels;
 public partial class MainViewModel : BaseViewModel
 {
     private readonly IFileSelector _fileSelector;
-    private readonly ITextFileGetterService _textGetter;
     private readonly ITabFactory _tabFactory;
 
     [ObservableProperty]
@@ -26,10 +29,9 @@ public partial class MainViewModel : BaseViewModel
     
     public ObservableCollection<TabItem> Tabs { get; set; }
 
-    public MainViewModel(IFileSelector fileSelector, ITextFileGetterService textGetter, ITabFactory tabFactory)
+    public MainViewModel(IFileSelector fileSelector, ITabFactory tabFactory)
     {
         _fileSelector = fileSelector;
-        _textGetter = textGetter;
         _tabFactory = tabFactory;
         Title = "Text Cipher";
         Tabs = new ObservableCollection<TabItem>();
@@ -60,8 +62,15 @@ public partial class MainViewModel : BaseViewModel
 
         foreach (var path in paths)
         {
-            Tabs.Add(new TabItem{Header = path.Split(@"\")[^1], 
-                Content = _tabFactory.Create(await _textGetter.GetText(path))});
+            var fileName = path.Split(@"\")[^1];
+            Tabs.Add(new TabItem{Header = fileName, 
+                Content = _tabFactory.Create()});
+            WeakReferenceMessenger.Default.Send(new ValueChangedMessage<EncryptionArgs>(new EncryptionArgs
+            {
+                FromPath = path,
+                ToPath = path[..path.LastIndexOf(@"\", StringComparison.Ordinal)] + $@"\{fileName}.ffe",
+                Key = 3
+            }));
         }
     }
 

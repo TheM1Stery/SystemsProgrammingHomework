@@ -8,7 +8,7 @@ void Operation()
     Console.WriteLine($"{Thread.CurrentThread.Name}");
 }
 
-// this is this the better solution :)
+// this is the better solution :)
 while (number != 6_000_000)
 {
     var thread1 = new Thread(() =>
@@ -18,16 +18,16 @@ while (number != 6_000_000)
     })
     {
         IsBackground = true,
-        Name = "Thread1"
+        Name = "Thread0"
     };
     var thread2 = new Thread(() =>
     {
-        resetEventSecond.WaitOne(); // wait for the second thread to finish.
+        resetEventSecond.WaitOne(); // wait for the third thread to finish.
         Operation();
     })
     {
         IsBackground = true,
-        Name = "Thread2"
+        Name = "Thread1"
     };
     var thread3 = new Thread(() =>
     {
@@ -37,7 +37,7 @@ while (number != 6_000_000)
     })
     {
         IsBackground = true,
-        Name = "Thread3"
+        Name = "Thread2"
     };
     thread1.Start();
     thread2.Start();
@@ -47,7 +47,5 @@ while (number != 6_000_000)
     thread2.Join();
     thread3.Join();
 }
-
-
 Console.WriteLine($"Result: {number}");
 

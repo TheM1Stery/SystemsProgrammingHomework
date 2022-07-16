@@ -4,15 +4,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="clr-namespace:TextCipher.ViewModels"
+             xmlns:models="clr-namespace:TextCipher.Models"
              x:Class="TextCipher.Views.TabInfoView"
              x:DataType="vm:TabInfoViewModel">
-    <Grid RowDefinitions="*,Auto,Auto">
-        <TextBox Grid.Row="0" MinHeight="200"
+    <Panel>
+        <Panel.Styles>
+            <Style Selector="ProgressBar">
+                <Setter Property="Transitions">
+                    <Transitions>
+                        <DoubleTransition 
+                            Property="(models:ProgressBarWorkaround.Value)"
+                            Duration="0:0:0.5"/>
+                    </Transitions>
+                </Setter>
+            </Style>
+        </Panel.Styles>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False" VerticalAlignment="Stretch">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial BackgroundSource="Digger"
+                                             TintColor="Black"
+                                             TintOpacity="1"
+                                             MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <TextBox MinHeight="200"
                  IsReadOnly="True" TextWrapping="Wrap"
-                 Text="{CompiledBinding Message}" Margin="3"
+                 VerticalAlignment="Top"
+                 Text="{CompiledBinding Message}" Margin="5 10 5 30"
                  FontSize="16"/>
-        <Separator Grid.Row="1" MinHeight="10"/>
-        <ProgressBar Grid.Row="2" MinHeight="20" Value="{CompiledBinding Progress}"
-                     ShowProgressText="True" Margin="2"/>
-    </Grid>
+        <ProgressBar MinHeight="15"
+                     VerticalAlignment="Bottom"
+                     Margin="2"
+                     Maximum="100"
+                     models:ProgressBarWorkaround.Value="{CompiledBinding Progress}">
+        </ProgressBar>
+    </Panel>
 </UserControl>

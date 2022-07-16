@@ -31,7 +31,8 @@ namespace TextCipher
             container.Register<IFileSelector, FileSelector>(Lifestyle.Singleton);
             container.Register<ITextFileGetterService, TextFileGetterService>(Lifestyle.Singleton);
             container.Register<ITabFactory, TabFactory>(Lifestyle.Singleton);
-            
+            container.Register<IEncryptionService, CaesarCypherEncryptionService>(Lifestyle.Singleton);
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.MainWindow = container.GetInstance<MainView>();

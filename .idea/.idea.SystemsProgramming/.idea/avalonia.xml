@@ -12,6 +12,9 @@
         <entry key="Avalonia.NETCoreMVVMApp2/Views/MainWindow.axaml" value="Avalonia.NETCoreMVVMApp2/Avalonia.NETCoreMVVMApp2.csproj" />
         <entry key="ButtonReactionTimer/App.axaml" value="ButtonReactionTimer/ButtonReactionTimer.csproj" />
         <entry key="ButtonReactionTimer/MainWindow.axaml" value="ButtonReactionTimer/ButtonReactionTimer.csproj" />
+        <entry key="MultiThreadedFileReaded/MainWindow.axaml" value="MultiThreadedFileReaded/MultiThreadedFileReaded.csproj" />
+        <entry key="MultiThreadedFileReader/App.axaml" value="MultiThreadedFileReader/MultiThreadedFileReader.csproj" />
+        <entry key="MultiThreadedFileReader/MainWindow.axaml" value="MultiThreadedFileReader/MultiThreadedFileReader.csproj" />
         <entry key="MyTaskManager/App.axaml" value="MyTaskManager/MyTaskManager.csproj" />
         <entry key="MyTaskManager/MainWindow.axaml" value="MyTaskManager/MyTaskManager.csproj" />
         <entry key="MyTaskManager/Styles/Icons.axaml" value="MyTaskManager/MyTaskManager.csproj" />
