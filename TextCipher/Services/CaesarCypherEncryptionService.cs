@@ -15,6 +15,7 @@ public class CaesarCypherEncryptionService : IEncryptionService
             if (!char.IsLetter((char) character))
             {
                 to.Write((char)character);
+                Encrypting?.Invoke();
                 continue;
             }
             var offset = char.IsUpper((char)character) ? 'A' : 'a';

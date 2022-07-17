@@ -15,6 +15,7 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     private readonly ITextFileGetterService _textFileGetterService;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageLength))]
     private string? _message;
     
     [ObservableProperty]
@@ -22,6 +23,8 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
 
     
     private EncryptionArgs? _encryptionArgs;
+
+    public double MessageLength => Message?.Length ?? default;
     
     
     private void ThreadMethod(object? state)
