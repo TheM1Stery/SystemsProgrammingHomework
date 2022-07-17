@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,7 +15,7 @@ using Path = System.IO.Path;
 
 namespace SampleAppLauncher.ViewModels;
 
-public partial class MainViewModel : BaseViewModel, IWindowCloser
+public partial class MainViewModel : BaseViewModel, IWindowCloser, IDisposable
 {
     private readonly IPathSelector _pathSelector;
     private readonly IMessageBoxShower _messageBox;
@@ -42,12 +44,15 @@ public partial class MainViewModel : BaseViewModel, IWindowCloser
     private char _selectedOperator;
     
     public Action? Close { get; set; }
+
+    private Semaphore _semaphore;
     
     public MainViewModel(IPathSelector pathSelector, IMessageBoxShower messageBox, IProcessStarter processStarter)
     {
         _pathSelector = pathSelector;
         _messageBox = messageBox;
         _processStarter = processStarter;
+        _semaphore = new Semaphore(3, 3);
         Operators = new ObservableCollection<char> {'+', '-', '/', '*'};
     }
 
@@ -68,6 +73,11 @@ public partial class MainViewModel : BaseViewModel, IWindowCloser
         var debug = "SampleApp/DebugMode/net6.0/SampleApp.exe";
         var release = "SampleApp/ReleaseMode/net6.0/SampleApp.exe";
         var arguments = $"{_firstNumber} {_secondNumber} {_selectedOperator}";
+        if (!_semaphore.WaitOne(100))
+        {
+            await _messageBox.ShowMessageAsync("You reached the limit of processes", "erorr", Icon.Error);
+            return;
+        }
         if (_isDebugChecked)
         {
             if (_logPath is not null)
@@ -83,10 +93,20 @@ public partial class MainViewModel : BaseViewModel, IWindowCloser
                     arguments = args;
                 }
             }
-            _processStarter.StartProcess(debug, arguments);
+            var process = _processStarter.StartProcess(debug, arguments);
+            process.EnableRaisingEvents = true;
+            process.Exited += (_, _) =>
+            {
+                _semaphore.Release(1);
+            };
             return;
         }
-        _processStarter.StartProcess(release, arguments);
+        var secondProcess = _processStarter.StartProcess(release, arguments);
+        secondProcess.EnableRaisingEvents = true;
+        secondProcess.Exited += (_, _) =>
+        {
+            _semaphore.Release(1);
+        };
     }
 
     [RelayCommand]
@@ -113,4 +133,9 @@ public partial class MainViewModel : BaseViewModel, IWindowCloser
         Close?.Invoke();
     }
 
+    public void Dispose()
+    {
+        _semaphore.Dispose();
+        GC.SuppressFinalize(this);
+    }
 }
