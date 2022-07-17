@@ -20,21 +20,17 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     [ObservableProperty]
     private double _progress;
 
-
-    private StreamReader? _from;
-
-    private StreamWriter? _to;
-
-    private int _key;
+    
+    private EncryptionArgs? _encryptionArgs;
     
     
     private void ThreadMethod(object? state)
     {
-        if (_from is null || _to is null) 
+        if (_encryptionArgs?.FromPath is null || _encryptionArgs.ToPath is null) 
             return;
-        _encryptionService.Encrypt(_from, _to, _key);
-        _from.Dispose();
-        _to.Dispose();
+        using var from = new StreamReader(new FileStream(_encryptionArgs.FromPath, FileMode.Open));
+        using var to = new StreamWriter(new FileStream(_encryptionArgs.ToPath, FileMode.OpenOrCreate));
+        _encryptionService.Encrypt(from, to, _encryptionArgs.Key);
     }
     
     public TabInfoViewModel(IEncryptionService encryptionService, ITextFileGetterService textFileGetterService)
@@ -42,6 +38,10 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
         _encryptionService = encryptionService;
         _textFileGetterService = textFileGetterService;
         WeakReferenceMessenger.Default.Register(this);
+        _encryptionService.Encrypting += () =>
+        {
+            Progress++;
+        };
     }
 
     public async void Receive(ValueChangedMessage<EncryptionArgs> message)
@@ -50,13 +50,7 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
             return;
         WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<EncryptionArgs>>(this);
         Message = await _textFileGetterService.GetText(message.Value.FromPath);
-        _from = new StreamReader(new FileStream(message.Value.FromPath, FileMode.Open));
-        _to = new StreamWriter(new FileStream(message.Value.ToPath, FileMode.OpenOrCreate));
-        _key = message.Value.Key;
+        _encryptionArgs = message.Value;
         ThreadPool.QueueUserWorkItem(ThreadMethod);
-        _encryptionService.Encrypting += () =>
-        {
-            Progress++;
-        };
     }
 }
