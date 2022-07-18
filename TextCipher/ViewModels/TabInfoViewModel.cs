@@ -16,6 +16,8 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     private readonly IEncryptionService _encryptionService;
     private readonly ITextFileGetterService _textFileGetterService;
 
+    private static readonly Semaphore? ThreadLimiter = new(5, 5);
+    
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(MessageLength))]
     private string? _message;
@@ -38,6 +40,7 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     {
         if (_encryptionArgs?.FromPath is null || _encryptionArgs.ToPath is null)
             return;
+        ThreadLimiter?.WaitOne();
         var progress = 0;
         var percent = MessageLength * 0.01;
         _encryptionService.Encrypting += () =>
@@ -55,6 +58,7 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
         _encryptionService.Encrypt(from, to, _encryptionArgs.Key);
         _isCyphered = true;
         Message = _textFileGetterService.GetText(_encryptionArgs.FromPath);
+        ThreadLimiter?.Release();
     }
     
     
