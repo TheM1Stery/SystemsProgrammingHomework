@@ -5,8 +5,9 @@ namespace TextCipher.Services;
 
 public class CaesarCypherEncryptionService : IEncryptionService
 {
+
     public event Action? Encrypting;
-    
+
     public void Encrypt(StreamReader from, StreamWriter to, int key)
     {
         int character;

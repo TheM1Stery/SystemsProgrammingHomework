@@ -14,7 +14,7 @@
         xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
         Title="{CompiledBinding Title}"
         x:DataType="vm:MainViewModel"><!-- x:DataType is needed for CompiledBinding -->
-    <Grid RowDefinitions="0.0625*,3*">
+    <Grid RowDefinitions="0.2*,3*">
         <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial BackgroundSource="Digger"
@@ -23,11 +23,18 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Cypher" HorizontalAlignment="Center" Command="{CompiledBinding 
+        CypherCommand}" Margin="0 0 2 0"/>
+            <Button Content="Remove all tabs" Margin="2 0 0 0" 
+                    Command="{CompiledBinding RemoveAllTabsCommand}"/>
+        </StackPanel>
         
         <ui:TabView Grid.Row="1" TabItems="{CompiledBinding Tabs}" 
                     CloseButtonOverlayMode="OnPointerOver"
                     AddTabButtonCommand="{CompiledBinding AddTabCommand}"
-                    IsAddTabButtonVisible="True">
+                    IsAddTabButtonVisible="True" SelectedItem="{CompiledBinding SelectedTab}"
+                    Margin="0 2 0 0">
             <i:Interaction.Behaviors>
                 <ia:EventTriggerBehavior EventName="TabCloseRequested">
                     <ia:InvokeCommandAction Command="{CompiledBinding DeleteTabCommand}" 

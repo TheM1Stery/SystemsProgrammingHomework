@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,6 +27,8 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private string? _title;
 
+    [ObservableProperty]
+    private TabItem? _selectedTab;
     
     public ObservableCollection<TabItem> Tabs { get; set; }
 
@@ -38,7 +41,7 @@ public partial class MainViewModel : BaseViewModel
     }
     
     [RelayCommand]
-    private async Task AddTab()
+    private async Task AddTabAsync()
     { 
         var paths = await _fileSelector.GetFiles(new List<FileDialogFilter>
         {
@@ -59,7 +62,6 @@ public partial class MainViewModel : BaseViewModel
             }).Show();
             return;
         }
-
         foreach (var path in paths)
         {
             var fileName = path.Split(@"\")[^1];
@@ -78,5 +80,27 @@ public partial class MainViewModel : BaseViewModel
     private void DeleteTab(TabViewTabCloseRequestedEventArgs tabCloseArgs)
     {
         Tabs.Remove((TabItem)tabCloseArgs.Item);
+    }
+
+
+    [RelayCommand]
+    private void RemoveAllTabs()
+    {
+        // Tabs.Clear() was throwing an exception, so i did this.
+        // Safe remove
+        for (int i = Tabs.Count - 1; i >= 0; i--)
+        {
+            Tabs.RemoveAt(i);
+        }
+    }
+
+
+    [RelayCommand]
+    private void Cypher()
+    {
+        foreach (var tabItem in Tabs)
+        {
+            tabItem.Content?.Cypher();
+        }
     }
 }

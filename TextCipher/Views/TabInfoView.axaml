@@ -6,7 +6,9 @@
              xmlns:vm="clr-namespace:TextCipher.ViewModels"
              xmlns:models="clr-namespace:TextCipher.Models"
              x:Class="TextCipher.Views.TabInfoView"
-             x:DataType="vm:TabInfoViewModel">
+             x:DataType="vm:TabInfoViewModel"
+             xmlns:ae="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity">
     <Panel>
         <Panel.Styles>
             <Style Selector="ProgressBar">
@@ -27,15 +29,18 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <TextBox MinHeight="200"
-                 IsReadOnly="True" TextWrapping="Wrap"
+        <ae:TextEditor MinHeight="200" WordWrap="True"
                  VerticalAlignment="Top"
-                 Text="{CompiledBinding Message}" Margin="5 10 5 30"
-                 FontSize="16"/>
+                 IsReadOnly="True"
+                 Margin="5 10 5 30"
+                 FontSize="16">
+            <i:Interaction.Behaviors>
+                <models:DocumentTextBindingBehavior Text="{CompiledBinding Message, Mode=TwoWay}"/>
+            </i:Interaction.Behaviors>
+        </ae:TextEditor>
         <ProgressBar MinHeight="15"
                      VerticalAlignment="Bottom"
                      Margin="2"
-                     Maximum="{CompiledBinding MessageLength}"
                      models:ProgressBarWorkaround.Value="{CompiledBinding Progress}">
         </ProgressBar>
     </Panel>

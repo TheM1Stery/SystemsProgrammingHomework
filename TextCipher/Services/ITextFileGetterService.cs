@@ -5,5 +5,6 @@ namespace TextCipher.Services;
 
 public interface ITextFileGetterService
 {
-    public Task<string> GetText(string textFilePath);
+    public string GetText(string textFilePath);
+
 }

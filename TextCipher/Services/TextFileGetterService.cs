@@ -5,8 +5,9 @@ namespace TextCipher.Services;
 
 public class TextFileGetterService : ITextFileGetterService
 {
-    public async Task<string> GetText(string textFilePath)
+    public string GetText(string textFilePath)
     {
-        return await File.ReadAllTextAsync(textFilePath);
+        return File.ReadAllText(textFilePath);
     }
+    
 }
