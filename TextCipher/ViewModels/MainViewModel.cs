@@ -98,9 +98,6 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private void Cypher()
     {
-        foreach (var tabItem in Tabs)
-        {
-            tabItem.Content?.Cypher();
-        }
+        SelectedTab?.Content?.Cypher();
     }
 }

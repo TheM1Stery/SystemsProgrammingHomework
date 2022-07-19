@@ -3,10 +3,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:local="clr-namespace:SocialMediaUser"
         xmlns:viewModels="clr-namespace:SocialMediaUser.ViewModels"
         x:Class="SocialMediaUser.Views.MainView"
         x:DataType="viewModels:MainViewModel"
-        Title="MainView">
+        Title="SocialMediaUser">
+    <Window.DataTemplates>
+        <local:ViewLocator/>
+    </Window.DataTemplates>
     <Grid>
         <TransitioningContentControl Content="{CompiledBinding Store.CurrentViewModel}"/>
     </Grid>
