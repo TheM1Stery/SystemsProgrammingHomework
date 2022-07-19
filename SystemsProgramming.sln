@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondConsoleAppMutex", "Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyConcurrentList", "MyConcurrentList\MyConcurrentList.csproj", "{260D4C67-1D0C-4620-9833-5F4FDACA816F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaUser", "SocialMediaUser\SocialMediaUser.csproj", "{6ED9AF50-B3C2-4B16-9AAB-F6B96607C593}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,9 @@ Global
 		{260D4C67-1D0C-4620-9833-5F4FDACA816F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{260D4C67-1D0C-4620-9833-5F4FDACA816F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{260D4C67-1D0C-4620-9833-5F4FDACA816F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ED9AF50-B3C2-4B16-9AAB-F6B96607C593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ED9AF50-B3C2-4B16-9AAB-F6B96607C593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ED9AF50-B3C2-4B16-9AAB-F6B96607C593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ED9AF50-B3C2-4B16-9AAB-F6B96607C593}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

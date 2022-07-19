@@ -23,6 +23,9 @@
         <entry key="SampleAppLauncher/MainWindow.axaml" value="SampleAppLauncher/SampleAppLauncher.csproj" />
         <entry key="SampleAppLauncher/Styles/Icons.axaml" value="SampleAppLauncher/SampleAppLauncher.csproj" />
         <entry key="SampleAppLauncher/Views/MainView.axaml" value="SampleAppLauncher/SampleAppLauncher.csproj" />
+        <entry key="SocialMediaUser/App.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
+        <entry key="SocialMediaUser/MainWindow.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
+        <entry key="SocialMediaUser/Views/MainView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="TextCipher/App.axaml" value="TextCipher/TextCipher.csproj" />
         <entry key="TextCipher/MainWindow.axaml" value="TextCipher/TextCipher.csproj" />
         <entry key="TextCipher/Views/MainView.axaml" value="TextCipher/TextCipher.csproj" />
