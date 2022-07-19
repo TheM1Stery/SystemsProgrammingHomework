@@ -30,8 +30,13 @@ namespace TextCipher
             
             container.Register<IFileSelector, FileSelector>(Lifestyle.Singleton);
             container.Register<ITextFileGetterService, TextFileGetterService>(Lifestyle.Singleton);
-            container.Register<ITabFactory, TabFactory>(Lifestyle.Singleton);
+            container.RegisterSingleton<ITabFactory>(() =>
+            {
+                return new TabFactory(() => container.GetInstance<TabInfoViewModel>());
+            });
             container.Register<IEncryptionService, CaesarCypherEncryptionService>(Lifestyle.Singleton);
+            container.Register<ISemaphoreWrapper, SemaphoreWrapper>(Lifestyle.Singleton);
+            container.Register<TabInfoViewModel>(Lifestyle.Transient);
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
