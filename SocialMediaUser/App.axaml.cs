@@ -26,15 +26,16 @@ namespace SocialMediaUser
             {
                 var factory = new ViewModelFactory(new Dictionary<Type, Func<BaseViewModel>>()
                 {
-                    
+                    [typeof(LoginViewModel)] = () => container.GetInstance<LoginViewModel>(),
+                    [typeof(RegisterViewModel)] = () => container.GetInstance<RegisterViewModel>()
                 });
                 return factory;
             });
             container.Register<INavigationService, NavigationService>(Lifestyle.Singleton);
             container.Register<MainView>(Lifestyle.Singleton);
             container.Register<MainViewModel>(Lifestyle.Singleton);
-            container.Register<GoodbyeWorldViewModel>(Lifestyle.Singleton);
-            container.Register<HelloWorldViewModel>(Lifestyle.Singleton);
+            container.Register<LoginViewModel>();
+            container.Register<RegisterViewModel>();
             container.RegisterInitializer<MainView>(x =>
             {
                 x.DataContext = container.GetInstance<MainViewModel>();

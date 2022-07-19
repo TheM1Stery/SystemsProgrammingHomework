@@ -59,6 +59,7 @@ public partial class MainViewModel : BaseViewModel
                 ContentMessage = "Couldn't get text files",
                 Icon = Icon.Error,
                 ShowInCenter = true,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
             }).Show();
             return;
         }

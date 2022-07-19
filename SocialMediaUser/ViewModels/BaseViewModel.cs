@@ -3,12 +3,13 @@ using SocialMediaUser.Services;
 
 namespace SocialMediaUser.ViewModels;
 
-public class BaseViewModel : ObservableObject
+public abstract class BaseViewModel : ObservableObject
 {
-    protected readonly INavigationService Navigation;
+    // Navigator is responsible for navigating through viewModels
+    protected readonly INavigationService Navigator;
 
-    public BaseViewModel(INavigationService navigation)
+    protected BaseViewModel(INavigationService navigation)
     {
-        Navigation = navigation;
+        Navigator = navigation;
     }
 }

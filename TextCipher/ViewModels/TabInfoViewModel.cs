@@ -19,7 +19,6 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     
     
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(MessageLength))]
     private string? _message;
     
     [ObservableProperty]
@@ -29,7 +28,8 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     private EncryptionArgs? _encryptionArgs;
 
 
-    public double MessageLength => Message?.Length ?? default;
+    [ObservableProperty]
+    private int _messageLength;
     
 
     private bool _isCyphered;
@@ -42,12 +42,12 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
             return;
         _semaphore.WaitOne();
         var progress = 0;
-        var percent = MessageLength * 0.01;
+        var percent = Math.Round(MessageLength * 0.03);
         _encryptionService.Encrypting += () =>
         {
             if (progress >= percent)
             {
-                Progress++;
+                Progress += progress;
                 progress = 0;
             }
             progress++;
@@ -56,8 +56,11 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
             FileShare.Read));
         using var to = new StreamWriter(new FileStream(_encryptionArgs.ToPath, FileMode.OpenOrCreate));
         _encryptionService.Encrypt(from, to, _encryptionArgs.Key);
+        Progress += progress;
+        from.Close();
+        to.Close();
+        Message = _textFileGetterService.GetText(_encryptionArgs.ToPath);
         _isCyphered = true;
-        Message = _textFileGetterService.GetText(_encryptionArgs.FromPath);
         _semaphore.Release();
     }
     
@@ -85,5 +88,6 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
         WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<EncryptionArgs>>(this);
         _encryptionArgs = message.Value;
         Message = _textFileGetterService.GetText(_encryptionArgs.FromPath);
+        MessageLength = Message.Length;
     }
 }

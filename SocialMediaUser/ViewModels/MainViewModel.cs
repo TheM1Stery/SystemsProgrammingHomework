@@ -9,5 +9,6 @@ public class MainViewModel : BaseViewModel
     public MainViewModel(NavigationStore store, INavigationService navigationService) : base(navigationService)
     {
         Store = store;
+        Navigator.Navigate<LoginViewModel>();
     }
 }

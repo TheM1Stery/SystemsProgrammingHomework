@@ -1,6 +1,10 @@
-﻿namespace SocialMediaUser.ViewModels;
+﻿using SocialMediaUser.Services;
 
-public class RegisterViewModel
+namespace SocialMediaUser.ViewModels;
+
+public class RegisterViewModel : BaseViewModel
 {
-    
+    public RegisterViewModel(INavigationService navigation) : base(navigation)
+    {
+    }
 }
