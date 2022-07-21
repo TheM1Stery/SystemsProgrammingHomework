@@ -21,17 +21,17 @@ namespace SocialMediaUser
         public override void OnFrameworkInitializationCompleted()
         {
             var container = new Container();
-            container.Register<NavigationStore>(Lifestyle.Singleton);
-            container.RegisterSingleton<IViewModelFactory>(() =>
+            container.Register<NavigationStore<BaseViewModel>>(Lifestyle.Singleton);
+            container.RegisterSingleton<IViewModelFactory<BaseViewModel>>(() =>
             {
-                var factory = new ViewModelFactory(new Dictionary<Type, Func<BaseViewModel>>()
+                var factory = new ViewModelFactory<BaseViewModel>(new Dictionary<Type, Func<BaseViewModel>>()
                 {
                     [typeof(LoginViewModel)] = () => container.GetInstance<LoginViewModel>(),
                     [typeof(RegisterViewModel)] = () => container.GetInstance<RegisterViewModel>()
                 });
                 return factory;
             });
-            container.Register<INavigationService, NavigationService>(Lifestyle.Singleton);
+            container.Register<INavigationService<BaseViewModel>, NavigationService<BaseViewModel>>(Lifestyle.Singleton);
             container.Register<MainView>(Lifestyle.Singleton);
             container.Register<MainViewModel>(Lifestyle.Singleton);
             container.Register<LoginViewModel>();

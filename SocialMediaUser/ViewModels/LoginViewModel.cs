@@ -5,7 +5,7 @@ namespace SocialMediaUser.ViewModels;
 
 public partial class LoginViewModel : BaseViewModel
 {
-    public LoginViewModel(INavigationService navigation) : base(navigation)
+    public LoginViewModel(INavigationService<BaseViewModel> navigation) : base(navigation)
     {
     }
 

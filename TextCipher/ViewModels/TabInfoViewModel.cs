@@ -25,7 +25,7 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     private double _progress;
 
     
-    private EncryptionArgs? _encryptionArgs;
+    public EncryptionArgs? EncryptionArgs { get; private set; }
 
 
     [ObservableProperty]
@@ -38,23 +38,23 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     
     private void ThreadMethod(object? state)
     {
-        if (_encryptionArgs?.FromPath is null || _encryptionArgs.ToPath is null)
+        if (EncryptionArgs?.FromPath is null || EncryptionArgs.ToPath is null)
             return;
         _isCyphered = true;
         _semaphore.WaitOne();
         if (Message == "Couldn't get the message. But it can be cyphered..")
-            MessageLength = _textFileGetterService.GetTextLength(_encryptionArgs.FromPath);
+            MessageLength = _textFileGetterService.GetTextLength(EncryptionArgs.FromPath);
         _encryptionService.OnOnePercent += i =>
         {
             Progress = i;
         };
-        using var from = new FileStream(_encryptionArgs.FromPath, FileMode.Open, FileAccess.Read,
+        using var from = new FileStream(EncryptionArgs.FromPath, FileMode.Open, FileAccess.Read,
             FileShare.Read);
-        using var to = new FileStream(_encryptionArgs.ToPath, FileMode.OpenOrCreate);
-        _encryptionService.Encrypt(from, to, _encryptionArgs.Key);
+        using var to = new FileStream(EncryptionArgs.ToPath, FileMode.OpenOrCreate);
+        _encryptionService.Encrypt(from, to, EncryptionArgs.Key);
         from.Close();
         to.Close();
-        Message = _textFileGetterService.GetText(_encryptionArgs.ToPath) ?? "Cypher was done successfully";
+        Message = _textFileGetterService.GetText(EncryptionArgs.ToPath) ?? "Cypher was done successfully";
         _semaphore.Release();
     }
     
@@ -80,8 +80,8 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
         if (message.Value.FromPath is null || message.Value.ToPath is null)
             return;
         WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<EncryptionArgs>>(this);
-        _encryptionArgs = message.Value;
-        Message = _textFileGetterService.GetText(_encryptionArgs.FromPath) ?? "Couldn't get the message. But it can be cyphered..";
+        EncryptionArgs = message.Value;
+        Message = _textFileGetterService.GetText(EncryptionArgs.FromPath) ?? "Couldn't get the message. But it can be cyphered..";
         if (Message is not null)
             MessageLength = Message.Length;
         if (Message == "Couldn't get the message. But it can be cyphered..")

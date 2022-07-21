@@ -4,17 +4,17 @@ using SocialMediaUser.ViewModels;
 
 namespace SocialMediaUser.Services;
 
-public class ViewModelFactory : IViewModelFactory
+public class ViewModelFactory<TBase> : IViewModelFactory<TBase>
 {
-    private readonly Dictionary<Type, Func<BaseViewModel>> _factories;
+    private readonly Dictionary<Type, Func<TBase>> _factories;
 
-    public ViewModelFactory(Dictionary<Type, Func<BaseViewModel>> factories)
+    public ViewModelFactory(Dictionary<Type, Func<TBase>> factories)
     {
         _factories = factories;
     }
     
     
-    public BaseViewModel Create<TViewModel>() where TViewModel : BaseViewModel
+    public TBase Create<TViewModel>() where TViewModel : TBase
     {
         if (!_factories.TryGetValue(typeof(TViewModel), out var factory))
         {

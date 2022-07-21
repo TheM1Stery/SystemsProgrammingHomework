@@ -4,8 +4,8 @@ using SocialMediaUser.ViewModels;
 namespace SocialMediaUser.Services;
 
 
-public partial class NavigationStore : ObservableObject
+public partial class NavigationStore<TBase> : ObservableObject
 {
     [ObservableProperty]
-    private BaseViewModel? _currentViewModel;
+    private TBase? _currentViewModel;
 }

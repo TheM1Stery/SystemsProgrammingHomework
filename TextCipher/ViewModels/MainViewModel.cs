@@ -65,6 +65,10 @@ public partial class MainViewModel : BaseViewModel
         }
         foreach (var path in paths)
         {
+            if (Tabs.Any(x => x.Content?.EncryptionArgs?.FromPath == path))
+            {
+                continue;
+            }
             var fileName = path.Split(@"\")[^1];
             Tabs.Add(new TabItem{Header = fileName, 
                 Content = _tabFactory.Create()});

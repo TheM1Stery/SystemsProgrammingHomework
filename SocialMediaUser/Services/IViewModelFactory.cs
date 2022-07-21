@@ -2,7 +2,7 @@
 
 namespace SocialMediaUser.Services;
 
-public interface IViewModelFactory
+public interface IViewModelFactory<TBase>
 {
-    public BaseViewModel Create<TViewModel>() where TViewModel : BaseViewModel;
+    public TBase Create<TViewModel>() where TViewModel : TBase;
 }

@@ -2,7 +2,7 @@
 
 namespace SocialMediaUser.Services;
 
-public interface INavigationService
+public interface INavigationService<in TBase>
 {
-    public void Navigate<T>() where T : BaseViewModel;
+    public void Navigate<TViewModel>() where TViewModel : TBase;
 }
