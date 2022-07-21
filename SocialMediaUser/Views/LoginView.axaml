@@ -9,8 +9,10 @@
     <Panel>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBox HorizontalAlignment="Stretch" Watermark="Enter login..."
-                     Margin="0 0 0 5"/>
-            <TextBox HorizontalAlignment="Stretch" Watermark="Enter password..."/>
+                     Margin="0 0 0 5"
+                     MaxWidth="220"/>
+            <TextBox HorizontalAlignment="Stretch" Watermark="Enter password..."
+                     MaxWidth="220" Margin="0 0 0 5"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock Text="Don't have an account?" Margin="0 0 3 0"/>
                 <Button Content="Register" Command="{CompiledBinding NavigateToRegisterCommand}">

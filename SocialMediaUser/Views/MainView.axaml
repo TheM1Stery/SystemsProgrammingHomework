@@ -9,6 +9,7 @@
         x:DataType="viewModels:MainViewModel"
         ExtendClientAreaToDecorationsHint="True"
         Background="Transparent"
+        Title="{CompiledBinding Title}"
         TransparencyLevelHint="AcrylicBlur">
     <Window.DataTemplates>
         <local:ViewLocator/>

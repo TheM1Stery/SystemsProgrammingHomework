@@ -10,7 +10,8 @@ public partial class MainViewModel : BaseViewModel
     
     public NavigationStore<BaseViewModel> Store { get; }
 
-    public MainViewModel(NavigationStore<BaseViewModel> store, INavigationService<BaseViewModel> navigationService) : base(navigationService)
+    public MainViewModel(NavigationStore<BaseViewModel> store, INavigationService<BaseViewModel> navigationService) 
+        : base(navigationService)
     {
         Store = store;
         Title = "Social Media(User Panel)";
