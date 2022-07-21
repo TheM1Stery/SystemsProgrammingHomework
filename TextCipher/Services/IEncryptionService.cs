@@ -5,7 +5,7 @@ namespace TextCipher.Services;
 
 public interface IEncryptionService
 {
-    public event Action Encrypting;
+    public event Action<int> OnOnePercent;
     
-    public void Encrypt(StreamReader from, StreamWriter to, int key);
+    public void Encrypt(FileStream from, FileStream to, int key);
 }

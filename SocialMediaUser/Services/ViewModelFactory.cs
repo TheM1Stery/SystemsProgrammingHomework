@@ -14,9 +14,9 @@ public class ViewModelFactory : IViewModelFactory
     }
     
     
-    public BaseViewModel Create<T>() where T : BaseViewModel
+    public BaseViewModel Create<TViewModel>() where TViewModel : BaseViewModel
     {
-        if (!_factories.TryGetValue(typeof(T), out var factory))
+        if (!_factories.TryGetValue(typeof(TViewModel), out var factory))
         {
             throw new ArgumentException("Invalid ViewModel");
         }

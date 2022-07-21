@@ -4,7 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:SocialMediaUser.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="viewModels:MainViewModel"
+             x:DataType="viewModels:LoginViewModel"
              x:Class="SocialMediaUser.Views.LoginView">
-    
+    <Panel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBox HorizontalAlignment="Stretch" Watermark="Enter login..."
+                     Margin="0 0 0 5"/>
+            <TextBox HorizontalAlignment="Stretch" Watermark="Enter password..."/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Don't have an account?" Margin="0 0 3 0"/>
+                <Button Content="Register" Command="{CompiledBinding NavigateToRegisterCommand}">
+                    <Button.Styles>
+                        <Style Selector="Button">
+                            <Setter Property="Foreground" Value="RoyalBlue"/>
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <ControlTemplate>
+                                    <ContentPresenter Content="{TemplateBinding Content}">
+                                        <ContentPresenter.Styles>
+                                            <Style Selector="TextBlock">
+                                                <Setter Property="Foreground" Value="{TemplateBinding Foreground}"/>
+                                                <Setter Property="FontSize" Value="{TemplateBinding FontSize}"/>
+                                                <Setter Property="TextDecorations" Value="Underline"/>
+                                            </Style>
+                                        </ContentPresenter.Styles>
+                                    </ContentPresenter>
+                                </ControlTemplate>
+                            </Setter>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Panel>
 </UserControl>

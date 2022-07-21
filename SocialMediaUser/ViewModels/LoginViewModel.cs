@@ -1,10 +1,18 @@
-﻿using SocialMediaUser.Services;
+﻿using CommunityToolkit.Mvvm.Input;
+using SocialMediaUser.Services;
 
 namespace SocialMediaUser.ViewModels;
 
-public class LoginViewModel : BaseViewModel
+public partial class LoginViewModel : BaseViewModel
 {
     public LoginViewModel(INavigationService navigation) : base(navigation)
     {
+    }
+
+
+    [RelayCommand]
+    private void NavigateToRegister()
+    {
+        Navigator.Navigate<RegisterViewModel>();
     }
 }

@@ -40,27 +40,21 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
     {
         if (_encryptionArgs?.FromPath is null || _encryptionArgs.ToPath is null)
             return;
+        _isCyphered = true;
         _semaphore.WaitOne();
-        var progress = 0;
-        var percent = Math.Round(MessageLength * 0.03);
-        _encryptionService.Encrypting += () =>
+        if (Message == "Couldn't get the message. But it can be cyphered..")
+            MessageLength = _textFileGetterService.GetTextLength(_encryptionArgs.FromPath);
+        _encryptionService.OnOnePercent += i =>
         {
-            if (progress >= percent)
-            {
-                Progress += progress;
-                progress = 0;
-            }
-            progress++;
+            Progress = i;
         };
-        using var from = new StreamReader(new FileStream(_encryptionArgs.FromPath, FileMode.Open, FileAccess.Read,
-            FileShare.Read));
-        using var to = new StreamWriter(new FileStream(_encryptionArgs.ToPath, FileMode.OpenOrCreate));
+        using var from = new FileStream(_encryptionArgs.FromPath, FileMode.Open, FileAccess.Read,
+            FileShare.Read);
+        using var to = new FileStream(_encryptionArgs.ToPath, FileMode.OpenOrCreate);
         _encryptionService.Encrypt(from, to, _encryptionArgs.Key);
-        Progress += progress;
         from.Close();
         to.Close();
-        Message = _textFileGetterService.GetText(_encryptionArgs.ToPath);
-        _isCyphered = true;
+        Message = _textFileGetterService.GetText(_encryptionArgs.ToPath) ?? "Cypher was done successfully";
         _semaphore.Release();
     }
     
@@ -87,7 +81,10 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
             return;
         WeakReferenceMessenger.Default.Unregister<ValueChangedMessage<EncryptionArgs>>(this);
         _encryptionArgs = message.Value;
-        Message = _textFileGetterService.GetText(_encryptionArgs.FromPath);
-        MessageLength = Message.Length;
+        Message = _textFileGetterService.GetText(_encryptionArgs.FromPath) ?? "Couldn't get the message. But it can be cyphered..";
+        if (Message is not null)
+            MessageLength = Message.Length;
+        if (Message == "Couldn't get the message. But it can be cyphered..")
+            MessageLength = 100;
     }
 }

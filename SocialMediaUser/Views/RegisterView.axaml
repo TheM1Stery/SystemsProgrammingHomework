@@ -6,5 +6,5 @@
              xmlns:viewModels="clr-namespace:SocialMediaUser.ViewModels"
              x:DataType="viewModels:RegisterViewModel"
              x:Class="SocialMediaUser.Views.RegisterView">
-    Welcome to Avalonia!
+    
 </UserControl>

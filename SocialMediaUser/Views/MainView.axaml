@@ -7,11 +7,22 @@
         xmlns:viewModels="clr-namespace:SocialMediaUser.ViewModels"
         x:Class="SocialMediaUser.Views.MainView"
         x:DataType="viewModels:MainViewModel"
-        Title="SocialMediaUser">
+        ExtendClientAreaToDecorationsHint="True"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur">
     <Window.DataTemplates>
         <local:ViewLocator/>
     </Window.DataTemplates>
-    <Grid>
+    <Panel>
+        <!-- global border -->
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial BackgroundSource="Digger"
+                                             TintColor="Black"
+                                             TintOpacity="1"
+                                             MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
         <TransitioningContentControl Content="{CompiledBinding Store.CurrentViewModel}"/>
-    </Grid>
+    </Panel>
 </Window>
