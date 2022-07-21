@@ -38,6 +38,9 @@
                     </Button.Styles>
                 </Button>
             </StackPanel>
+            <Button Content="Login" Command="{CompiledBinding LoginCommand}" 
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center" Margin="5"/>
         </StackPanel>
     </Panel>
 </UserControl>

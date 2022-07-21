@@ -6,5 +6,15 @@
              xmlns:viewModels="clr-namespace:SocialMediaUser.ViewModels"
              x:DataType="viewModels:RegisterViewModel"
              x:Class="SocialMediaUser.Views.RegisterView">
-    
+    <Panel>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Button Content="Register"
+                        HorizontalContentAlignment="Center" Margin="5"/>
+                <Button Content="Cancel"
+                        HorizontalContentAlignment="Center"
+                        Command="{CompiledBinding CancelCommand}"/>
+            </StackPanel>
+        </StackPanel>
+    </Panel>
 </UserControl>

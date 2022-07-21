@@ -2,18 +2,18 @@
 
 namespace SocialMediaUser.Services;
 
-public class NavigationService<TBase> : INavigationService<TBase>
+public class NavigationService<TBaseViewModel> : INavigationService<TBaseViewModel>
 {
-    private readonly NavigationStore<TBase> _store;
-    private readonly IViewModelFactory<TBase> _factory;
+    private readonly NavigationStore<TBaseViewModel> _store;
+    private readonly IViewModelFactory<TBaseViewModel> _factory;
 
-    public NavigationService(NavigationStore<TBase> store, IViewModelFactory<TBase> factory)
+    public NavigationService(NavigationStore<TBaseViewModel> store, IViewModelFactory<TBaseViewModel> factory)
     {
         _store = store;
         _factory = factory;
     }
 
-    public void Navigate<TViewModel>() where TViewModel : TBase
+    public void Navigate<TViewModel>() where TViewModel : TBaseViewModel
     {
         _store.CurrentViewModel = _factory.Create<TViewModel>();
     }
