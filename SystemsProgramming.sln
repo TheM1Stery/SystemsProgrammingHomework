@@ -16,9 +16,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadNumberSum", "ThreadNu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadedFileReader", "MultiThreadedFileReader\MultiThreadedFileReader.csproj", "{D280FB7C-06DB-48B8-A31D-299DF1FD2EC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstConsoleAppMutex", "FirstConsoleAppMutex\FirstConsoleAppMutex.csproj", "{DC74355F-44DE-46FE-B543-A8AFDB12FB3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstConsoleAppNumInc", "FirstConsoleAppNumInc\FirstConsoleAppNumInc.csproj", "{DC74355F-44DE-46FE-B543-A8AFDB12FB3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondConsoleAppMutex", "SecondConsoleAppMutex\SecondConsoleAppMutex.csproj", "{916D94EB-FC79-4DD3-A6CF-0ABAFC401AD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecondConsoleAppNumInc", "SecondConsoleAppNumInc\SecondConsoleAppNumInc.csproj", "{916D94EB-FC79-4DD3-A6CF-0ABAFC401AD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyConcurrentList", "MyConcurrentList\MyConcurrentList.csproj", "{260D4C67-1D0C-4620-9833-5F4FDACA816F}"
 EndProject

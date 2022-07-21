@@ -5,6 +5,8 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyName>FirstConsoleAppNumInc</AssemblyName>
+        <RootNamespace>FirstConsoleAppNumInc</RootNamespace>
     </PropertyGroup>
 
 </Project>
