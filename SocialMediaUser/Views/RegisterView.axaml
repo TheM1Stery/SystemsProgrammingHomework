@@ -8,11 +8,22 @@
              x:Class="SocialMediaUser.Views.RegisterView">
     <Panel>
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <TextBox Watermark="Enter first name..." Text="{CompiledBinding Form.FirstName}" 
+                     UseFloatingWatermark="True" Margin="5"/>
+            <TextBox Watermark="Enter last name..." Text="{CompiledBinding Form.LastName}"
+                     UseFloatingWatermark="True" Margin="5"/>
+            <DatePicker Header="Enter your date of birth: " 
+                        SelectedDate="{CompiledBinding Form.DateOfBirth}"
+                        Margin="5"
+                        MaxYear=""/>
+            <TextBox Watermark="Enter your email.." UseFloatingWatermark="True" Margin="5"
+                     Text="{CompiledBinding Form.Email}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                 <Button Content="Register"
                         HorizontalContentAlignment="Center" Margin="5"/>
                 <Button Content="Cancel"
                         HorizontalContentAlignment="Center"
+                        Margin="5"
                         Command="{CompiledBinding CancelCommand}"/>
             </StackPanel>
         </StackPanel>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using SimpleInjector;
 using SocialMediaUser.Services;
@@ -40,6 +42,10 @@ namespace SocialMediaUser
             {
                 x.DataContext = container.GetInstance<MainViewModel>();
             });
+            
+            // remove Avalonia validations, so that CommunityToolkit mvvm validations would work
+            ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
+            
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.MainWindow = container.GetInstance<MainView>();
