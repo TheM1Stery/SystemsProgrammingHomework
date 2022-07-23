@@ -45,8 +45,8 @@ namespace OpenFileDialogWrapper;
 
         public string? GetTextFileContent()
         {
-            var propertyInfo = _openFileDialogType?.GetProperty("Filter");
-            propertyInfo?.SetValue(_openFileDialog, "Text documents (.txt)|*.txt");
+            _openFileDialogType?.GetProperty("Filter")?
+                .SetValue(_openFileDialog, "Text documents (.txt)|*.txt");
             var methodInfo = _openFileDialogType?.GetMethod("ShowDialog", Array.Empty<Type>());
             var result = methodInfo?.Invoke(_openFileDialog, null);
             if (result is not true) 
