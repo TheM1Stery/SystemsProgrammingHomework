@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SocialMediaUser.ViewModels;
-
-namespace SocialMediaUser.Services;
+﻿namespace MVVMUtils;
 
 public class ViewModelFactory<TBaseViewModel> : IViewModelFactory<TBaseViewModel>
 {

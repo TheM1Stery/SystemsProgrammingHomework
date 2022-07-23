@@ -29,5 +29,11 @@ public partial class RegistrationModel : ObservableValidator
     [EmailAddress]
     [Required]
     private string? _email;
+    
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [MinLength(5)]
+    [Required]
+    private string? _password;
 
 }

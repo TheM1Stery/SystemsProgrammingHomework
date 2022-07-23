@@ -1,6 +1,5 @@
-﻿using System;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
+using MVVMUtils;
 using SocialMediaUser.Models;
 using SocialMediaUser.Services;
 
@@ -11,11 +10,10 @@ public partial class RegisterViewModel : BaseViewModel
 
     public RegistrationModel Form { get; } = new();
     
-    public RegisterViewModel(INavigationService<BaseViewModel> navigation) : base(navigation)
+    public RegisterViewModel(IHashCreatorService hashCreator, INavigationService<BaseViewModel> navigation) : base(navigation)
     {
     }
-
-
+    
     [RelayCommand]
     private void Cancel()
     {

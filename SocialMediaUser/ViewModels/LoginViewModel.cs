@@ -3,14 +3,20 @@ using CommunityToolkit.Mvvm.Input;
 using MessageBox.Avalonia;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Enums;
+using MVVMUtils;
+using SocialMediaUser.Models;
 using SocialMediaUser.Services;
 
 namespace SocialMediaUser.ViewModels;
 
 public partial class LoginViewModel : BaseViewModel
 {
-    public LoginViewModel(INavigationService<BaseViewModel> navigation) : base(navigation)
+    private readonly IRepository<User> _userRepository;
+
+    public LoginViewModel(IHashCreatorService hashCreator, IRepository<User> userRepository,
+        INavigationService<BaseViewModel> navigation) : base(navigation)
     {
+        _userRepository = userRepository;
     }
 
 

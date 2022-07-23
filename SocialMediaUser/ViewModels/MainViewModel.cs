@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using SocialMediaUser.Services;
+using MVVMUtils;
 
 namespace SocialMediaUser.ViewModels;
 
@@ -8,9 +8,9 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     private string? _title;
     
-    public NavigationStore<BaseViewModel> Store { get; }
+    public INavigationStore<BaseViewModel> Store { get; }
 
-    public MainViewModel(NavigationStore<BaseViewModel> store, INavigationService<BaseViewModel> navigationService) 
+    public MainViewModel(INavigationStore<BaseViewModel> store, INavigationService<BaseViewModel> navigationService) 
         : base(navigationService)
     {
         Store = store;

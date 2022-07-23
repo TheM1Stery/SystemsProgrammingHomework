@@ -1,4 +1,4 @@
-﻿namespace StupidCalculationLibrary;
+﻿namespace CalculationLibrary;
 
 public class Sum
 {
@@ -11,18 +11,13 @@ public class Sum
     /// <returns>returns the result, if invalid operator is provided, null will be returned</returns>
     public double? Calculate(double first, double second, char @operator)
     {
-        switch (@operator)
+        return @operator switch
         {
-            case '+':
-                return first + second;
-            case '-':
-                return first - second;
-            case '/':
-                return first / second;
-            case '*':
-                return first * second;
-            default:
-                return null; 
-        }
+            '+' => first + second,
+            '-' => first - second,
+            '/' => first / second,
+            '*' => first * second,
+            _ => null
+        };
     }
 }

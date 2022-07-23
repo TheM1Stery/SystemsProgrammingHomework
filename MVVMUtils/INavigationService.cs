@@ -1,6 +1,4 @@
-﻿using SocialMediaUser.ViewModels;
-
-namespace SocialMediaUser.Services;
+﻿namespace MVVMUtils;
 
 public interface INavigationService<in TBaseViewModel>
 {
