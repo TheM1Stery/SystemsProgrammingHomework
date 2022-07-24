@@ -50,23 +50,24 @@ namespace SocialMediaUser
             });
             container.Register<INavigationService<BaseViewModel>, NavigationService<BaseViewModel>>(Lifestyle.Singleton);
             container.Register<MainViewModel>(Lifestyle.Singleton);
-            container.Register<LoginViewModel>(Lifestyle.Scoped);
-            container.Register<RegisterViewModel>(Lifestyle.Scoped);
-            container.Register<UserListViewModel>(Lifestyle.Scoped);
+            container.Register<MainView>(Lifestyle.Singleton);
+            container.Register<LoginViewModel>();
+            container.Register<RegisterViewModel>();
+            container.Register<UserListViewModel>();
             container.Register<SocialMediaDbContext>(Lifestyle.Scoped);
             container.Register(typeof(IRepository<>), 
                 typeof(SocialMediaRepository<>), Lifestyle.Scoped);
             container.Register<IHashCreatorService, HashCreatorService>(Lifestyle.Singleton);
-
+            container.RegisterInitializer<MainView>(x =>
+            {
+                x.DataContext = container.GetInstance<MainViewModel>();
+            });
             // remove Avalonia validations, so that CommunityToolkitMVVM validations would work
             ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
             
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainView
-                {
-                    DataContext = container.GetInstance<MainViewModel>()
-                };
+                desktop.MainWindow = container.GetInstance<MainView>();
             }
             base.OnFrameworkInitializationCompleted();
         }
