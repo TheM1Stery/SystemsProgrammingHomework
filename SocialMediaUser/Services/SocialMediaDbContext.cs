@@ -15,6 +15,11 @@ public class SocialMediaDbContext : DbContext
         optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection") ?? string.Empty);
         base.OnConfiguring(optionsBuilder);
     }
+
+    public SocialMediaDbContext()
+    {
+        
+    }
     
     public DbSet<User> Users => Set<User>();
 }
