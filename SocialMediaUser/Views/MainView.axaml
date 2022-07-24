@@ -11,12 +11,9 @@
         Background="Transparent"
         Title="{CompiledBinding Title}"
         TransparencyLevelHint="AcrylicBlur">
-    <Window.DataTemplates>
-        <local:ViewLocator/>
-    </Window.DataTemplates>
-    <Panel>
+    <Grid RowDefinitions="0.0625*, *">
         <!-- global border -->
-        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+        <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial BackgroundSource="Digger"
                                              TintColor="Black"
@@ -24,6 +21,9 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <TransitioningContentControl Content="{CompiledBinding Store.CurrentViewModel}"/>
-    </Panel>
+        <TextBlock Grid.Row="0" Text="{CompiledBinding Title}" HorizontalAlignment="Stretch"
+                   VerticalAlignment="Top" 
+                   IsHitTestVisible="False"/>
+        <TransitioningContentControl Grid.Row="1" Content="{CompiledBinding Store.CurrentViewModel}"/>
+    </Grid>
 </Window>
