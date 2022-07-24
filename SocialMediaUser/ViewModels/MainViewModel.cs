@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MVVMUtils;
+using SocialMediaUser.Services;
 
 namespace SocialMediaUser.ViewModels;
 

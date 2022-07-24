@@ -21,6 +21,7 @@
                         Margin="5"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                 <Button Content="Register"
+                        Command="{CompiledBinding RegisterCommand}"
                         HorizontalContentAlignment="Center" Margin="5"/>
                 <Button Content="Cancel"
                         HorizontalContentAlignment="Center"

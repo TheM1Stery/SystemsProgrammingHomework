@@ -8,46 +8,59 @@ namespace SocialMediaUser.Services;
 
 public class SocialMediaRepository<T> : IRepository<T> where T: class
 {
-    private readonly SocialMediaDbContext _dbContext;
-
-    private readonly DbSet<T> _dbSet;
-
-
-    public SocialMediaRepository(SocialMediaDbContext dbContext)
+    public SocialMediaRepository()
     {
-        _dbContext = dbContext;
-        _dbContext.Database.EnsureCreated();
-        _dbSet = _dbContext.Set<T>();
+        using var dbContext = new SocialMediaDbContext();
+        dbContext.Database.EnsureCreated();
     }
     
     
     public void Add(T item)
     {
-        _dbSet.Add(item);
-        _dbContext.SaveChanges();
+        using var dbContext = new SocialMediaDbContext();
+        dbContext.Database.EnsureCreated();
+        var dbSet = dbContext.Set<T>();
+        dbSet.Add(item);
+        dbContext.SaveChanges();
     }
 
     public void Remove(T item)
     {
-        _dbSet.Remove(item);
-        _dbContext.SaveChanges();
+        using var dbContext = new SocialMediaDbContext();
+        var dbSet = dbContext.Set<T>();
+        dbSet.Remove(item);
+        dbContext.SaveChanges();
     }
 
     public void Update(T item)
     {
-        _dbSet.Update(item);
-        _dbContext.SaveChanges();
+        using var dbContext = new SocialMediaDbContext();
+        var dbSet = dbContext.Set<T>();
+        dbSet.Update(item);
+        dbContext.SaveChanges();
     }
 
     public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
     {
-        return _dbSet.Where(expression);
+        using var dbContext = new SocialMediaDbContext();
+        var dbSet = dbContext.Set<T>();
+        return dbSet.Where(expression).ToList();
     }
 
-    public T? this[int index] => _dbSet.Find(index);
+    public T? this[int index]
+    {
+        get
+        {
+            using var dbContext = new SocialMediaDbContext();
+            var dbSet = dbContext.Set<T>();
+            return dbSet.Find(index);
+        }
+    }
 
     public IEnumerable<T> GetAll()
     {
-        return _dbSet.ToList();
+        using var dbContext = new SocialMediaDbContext();
+        var dbSet = dbContext.Set<T>();
+        return dbSet.ToList();
     }
 }
