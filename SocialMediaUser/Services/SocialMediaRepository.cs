@@ -41,7 +41,7 @@ public class SocialMediaRepository<T> : IRepository<T> where T: class
 
     public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
     {
-        return _dbSet.Where(expression);
+        return _dbSet.Where(expression).ToList();
     }
 
     public T? this[int index] => _dbSet.Find(index);
@@ -51,8 +51,12 @@ public class SocialMediaRepository<T> : IRepository<T> where T: class
         return _dbSet.ToList();
     }
 
-    public IQueryable<T> Queryable()
+    public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes)
     {
-        return _dbSet.AsQueryable();
+        var query = _dbSet.AsNoTracking();
+
+        query = includes.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+
+        return query.ToList(); 
     }
 }

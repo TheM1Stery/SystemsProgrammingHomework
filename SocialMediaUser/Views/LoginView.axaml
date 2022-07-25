@@ -27,7 +27,7 @@
                 <Button Content="Register" Command="{CompiledBinding NavigateToRegisterCommand}">
                     <Button.Styles>
                         <Style Selector="Button">
-                            <Setter Property="Foreground" Value="RoyalBlue"/>
+                            <Setter Property="Foreground" Value="#1AFF9C"/>
                             <Setter Property="Padding" Value="0" />
                             <Setter Property="Cursor" Value="Hand"/>
                             <Setter Property="BorderThickness" Value="0" />

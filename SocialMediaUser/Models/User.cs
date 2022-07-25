@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace SocialMediaUser.Models;
@@ -24,6 +25,10 @@ public class User
   
     [Required]
     public string? PasswordHash { get; set; }
+
+
+    [NotMapped]
+    public string? FullName => FirstName + ' ' + LastName;
     
     [Required]
     public string? Email { get; set; }

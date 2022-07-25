@@ -9,9 +9,11 @@
         x:DataType="viewModels:MainViewModel"
         ExtendClientAreaToDecorationsHint="True"
         Background="Transparent"
+        Width="800"
+        Height="550"
         Title="{CompiledBinding Title}"
         TransparencyLevelHint="AcrylicBlur">
-    <Grid RowDefinitions="0.0625*, *">
+    <Grid RowDefinitions="Auto, *">
         <!-- global border -->
         <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
@@ -21,9 +23,18 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <TextBlock Grid.Row="0" Text="{CompiledBinding Title}" HorizontalAlignment="Stretch"
-                   VerticalAlignment="Top" 
-                   IsHitTestVisible="False"/>
+        <ExperimentalAcrylicBorder Grid.Row="0" IsHitTestVisible="False" MinHeight="30">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial BackgroundSource="Digger"
+                                             TintColor="#570861"
+                                             TintOpacity="1"
+                                             MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+            <TextBlock Text="{CompiledBinding Title}" HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#1AFF9C"
+                       IsHitTestVisible="False"/>
+        </ExperimentalAcrylicBorder>
         <TransitioningContentControl Grid.Row="1" Content="{CompiledBinding Store.CurrentViewModel}"/>
     </Grid>
 </Window>

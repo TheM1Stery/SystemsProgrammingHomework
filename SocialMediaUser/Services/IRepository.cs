@@ -18,5 +18,6 @@ public interface IRepository<T> where T: class
     public T? this[int index] { get; }
 
     public IEnumerable<T> GetAll();
-    public IQueryable<T> Queryable();
+
+    public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includes);
 }

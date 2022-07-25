@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using SocialMediaUser.Services;
-
-namespace SocialMediaUser.Models;
+namespace SocialMediaUser.Services;
 
 public partial class NavigationStore<TBaseViewModel> : ObservableObject , INavigationStore<TBaseViewModel>
 {
