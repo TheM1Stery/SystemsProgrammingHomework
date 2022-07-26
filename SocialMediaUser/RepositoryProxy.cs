@@ -8,7 +8,7 @@ namespace SocialMediaUser;
 
 public partial class App
 {
-    private partial class RepositoryDecorator<T>
+    private partial class RepositoryProxy<T>
     {
         public void Add(T item)
         {

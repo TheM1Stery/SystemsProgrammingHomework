@@ -65,6 +65,7 @@ public partial class RegisterViewModel : BaseViewModel
                 Email = Form.Email
             });
         });
+        Navigator.Navigate<LoginViewModel>();
     }
     
     

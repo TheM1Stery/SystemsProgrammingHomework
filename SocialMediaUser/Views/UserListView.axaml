@@ -3,22 +3,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:SocialMediaUser.ViewModels"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ie="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SocialMediaUser.Views.UserListView"
              x:DataType="vm:UserListViewModel">
     <Grid RowDefinitions="0.245*,3*">
         <Grid Grid.Row="0" ColumnDefinitions="*, 0.1*" HorizontalAlignment="Stretch">
-            <TextBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+            <TextBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="5" 
+                     Text="{CompiledBinding SearchString}"/>
             <Button Grid.Column="1" Content="Search" Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                    HorizontalContentAlignment="Center"/>
+                    HorizontalContentAlignment="Center"
+                    Command="{CompiledBinding SearchCommand}"/>
         </Grid>
         <ListBox Grid.Row="1" HorizontalAlignment="Stretch" Items="{CompiledBinding Users}" 
                  Margin="0 5 0 0"
                  VerticalAlignment="Stretch"
-                 Background="Transparent">
+                 Background="Transparent"
+                 SelectedItem="{CompiledBinding SelectedUser}"
+                 SelectionMode="Single">
+            <i:Interaction.Behaviors>
+                <ie:EventTriggerBehavior EventName="DoubleTapped">
+                    <ie:InvokeCommandAction Command="{CompiledBinding NavigateToUserWallCommand}"/>
+                </ie:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{CompiledBinding FirstName}"/>
+                    <Border>
+                        <TextBlock Text="{CompiledBinding  FullName}"/>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

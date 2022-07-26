@@ -25,12 +25,14 @@
         <entry key="SampleAppLauncher/Views/MainView.axaml" value="SampleAppLauncher/SampleAppLauncher.csproj" />
         <entry key="SocialMediaUser/App.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/MainWindow.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
+        <entry key="SocialMediaUser/ViewModels/UserPostWallViewModel.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/GoodbyeWorldView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/HelloWorldView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/LoginView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/MainView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/RegisterView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/UserListView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
+        <entry key="SocialMediaUser/Views/UserPostWallView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="TextCipher/App.axaml" value="TextCipher/TextCipher.csproj" />
         <entry key="TextCipher/MainWindow.axaml" value="TextCipher/TextCipher.csproj" />
         <entry key="TextCipher/Views/MainView.axaml" value="TextCipher/TextCipher.csproj" />

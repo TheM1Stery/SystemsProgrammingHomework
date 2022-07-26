@@ -1,11 +1,13 @@
-﻿namespace SocialMediaUser.Services;
+﻿using System;
+
+namespace SocialMediaUser.Services;
 
 
 public class NavigationService<TBaseViewModel> : INavigationService<TBaseViewModel>
 {
     private readonly INavigationStore<TBaseViewModel> _store;
     private readonly IViewModelFactory<TBaseViewModel> _factory;
-
+    
     public NavigationService(INavigationStore<TBaseViewModel> store, IViewModelFactory<TBaseViewModel> factory)
     {
         _store = store;

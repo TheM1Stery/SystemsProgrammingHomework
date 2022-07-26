@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using SocialMediaUser.Models;
 using SocialMediaUser.Services;
 
@@ -23,6 +25,9 @@ public partial class UserListViewModel : BaseViewModel
     [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
     private string? _searchString;
 
+    [ObservableProperty]
+    private User? _selectedUser;
+
 
     private bool CanSearch()
     {
@@ -36,16 +41,25 @@ public partial class UserListViewModel : BaseViewModel
         _userRepository = userRepository;
     }
 
+    [RelayCommand]
+    private void NavigateToUserWall()
+    {
+        if (_selectedUser is null)
+            return;
+        Navigator.Navigate<UserPostWallViewModel>();
+        WeakReferenceMessenger.Default.Send(new ValueChangedMessage<User>(_selectedUser));
+    }
+
 
     [RelayCommand(CanExecute = nameof(CanSearch))]
     private void Search()
     {
         ThreadPool.QueueUserWorkItem(_ =>
         {
+            var enumerable = _userRepository.Find(x => x.FirstName!.Contains(_searchString!) ||
+                                                       x.LastName!.Contains(_searchString!));
             lock (_usersLock)
             {
-                var enumerable = _userRepository.Find(x => x.FirstName!.Contains(_searchString!) ||
-                                                           x.LastName!.Contains(_searchString!));
                 Users = new ObservableCollection<User>(enumerable);
             }
         });

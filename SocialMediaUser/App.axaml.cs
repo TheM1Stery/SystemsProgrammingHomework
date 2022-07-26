@@ -23,13 +23,13 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    // Make decorator a nested private class, so that there won't be any access to it outside the Composition root
-    private partial class RepositoryDecorator<T> : IRepository<T> where T:class
+    // Make proxy a nested private class, so that there won't be any access to it outside the Composition root
+    private partial class RepositoryProxy<T> : IRepository<T> where T:class
     {
         private readonly Container _container;
         private readonly Func<IRepository<T>> _decorateeFactory;
         
-        public RepositoryDecorator(Container container, Func<IRepository<T>> decorateeFactory)
+        public RepositoryProxy(Container container, Func<IRepository<T>> decorateeFactory)
         {
             _container = container;
             _decorateeFactory = decorateeFactory;
@@ -49,6 +49,9 @@ public partial class App : Application
     }
 
 
+    private static Func<BaseViewModel> CreateProducer<T>(Container container)
+        where T : BaseViewModel => Lifestyle.Transient.CreateProducer<BaseViewModel, T>(container).GetInstance;
+
     // Creates container
     private Container Bootstrap()
     {
@@ -59,9 +62,10 @@ public partial class App : Application
         {
             var factory = new ViewModelFactory<BaseViewModel>(new Dictionary<Type, Func<BaseViewModel>>()
             {
-                [typeof(LoginViewModel)] = () => container.GetInstance<LoginViewModel>(),
-                [typeof(RegisterViewModel)] = () => container.GetInstance<RegisterViewModel>(),
-                [typeof(UserListViewModel)] = () => container.GetInstance<UserListViewModel>()
+                [typeof(LoginViewModel)] = CreateProducer<LoginViewModel>(container),
+                [typeof(RegisterViewModel)] =  CreateProducer<RegisterViewModel>(container),
+                [typeof(UserListViewModel)] = CreateProducer<UserListViewModel>(container),
+                [typeof(UserPostWallViewModel)] = CreateProducer<UserPostWallViewModel>(container)
             });
             return factory;
         });
@@ -71,6 +75,7 @@ public partial class App : Application
         container.Register<LoginViewModel>();
         container.Register<RegisterViewModel>();
         container.Register<UserListViewModel>();
+        container.Register<UserPostWallViewModel>();
         container.Register<SocialMediaDbContext>(Lifestyle.Scoped);
         container.Register(typeof(IRepository<>), 
             typeof(SocialMediaRepository<>), Lifestyle.Scoped);
@@ -79,9 +84,7 @@ public partial class App : Application
         {
             x.DataContext = container.GetInstance<MainViewModel>();
         });
-        // this decorators will decorate IRepository implementations. This is needed so that scope behaviour could be added to
-        // IRepository<> classes , otherwise SimpleInjector won't know when to dispose the IRepository<>.
-        container.RegisterDecorator(typeof(IRepository<>), typeof(RepositoryDecorator<>),
+        container.RegisterDecorator(typeof(IRepository<>), typeof(RepositoryProxy<>),
             Lifestyle.Singleton);
         container.Verify();
         return container;
