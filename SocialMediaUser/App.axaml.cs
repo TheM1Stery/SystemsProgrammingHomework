@@ -58,6 +58,7 @@ public partial class App : Application
         var container = new Container();
         container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
         container.Register<INavigationStore<BaseViewModel>, NavigationStore<BaseViewModel>>(Lifestyle.Singleton);
+        container.Register<RegistrationModel>();
         container.RegisterSingleton<IViewModelFactory<BaseViewModel>>(() =>
         {
             var factory = new ViewModelFactory<BaseViewModel>(new Dictionary<Type, Func<BaseViewModel>>()

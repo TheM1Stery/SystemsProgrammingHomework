@@ -13,14 +13,16 @@ namespace SocialMediaUser.ViewModels;
 
 public partial class RegisterViewModel : BaseViewModel
 {
+    public RegistrationModel Form { get; }
     private readonly IHashCreatorService _hashCreator;
     private readonly IRepository<User> _userRepository;
 
-    public RegistrationModel Form { get; } = new();
     
     public RegisterViewModel(IHashCreatorService hashCreator, IRepository<User> userRepository
-        ,INavigationService<BaseViewModel> navigation) : base(navigation)
+        ,INavigationService<BaseViewModel> navigation,
+        RegistrationModel form) : base(navigation)
     {
+        Form = form;
         _hashCreator = hashCreator;
         _userRepository = userRepository;
     }

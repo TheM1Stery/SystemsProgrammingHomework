@@ -1,11 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using SocialMediaUser.Services;
 
 namespace SocialMediaUser.Models;
 
 public partial class RegistrationModel : ObservableValidator
 {
+    private readonly IRepository<User> _userRepo;
+
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [MinLength(3)]
@@ -27,6 +31,7 @@ public partial class RegistrationModel : ObservableValidator
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [EmailAddress]
+    [CustomValidation(typeof(RegistrationModel), nameof(ValidateEmail))]
     [Required]
     private string? _email;
     
@@ -36,4 +41,16 @@ public partial class RegistrationModel : ObservableValidator
     [Required]
     private string? _password;
 
+    public RegistrationModel(IRepository<User> userRepo)
+    {
+        _userRepo = userRepo;
+    }
+
+    public static ValidationResult? ValidateEmail(string email, ValidationContext context)
+    {
+        var instance = (RegistrationModel)context.ObjectInstance;
+        var emailExists = instance._userRepo.Find(x => x.Email == email).Any();
+        return !emailExists ? ValidationResult.Success : 
+            new ValidationResult("This email is already registered");
+    }
 }
