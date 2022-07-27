@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
@@ -73,10 +74,7 @@ public partial class App : Application
         container.Register<INavigationService<BaseViewModel>, NavigationService<BaseViewModel>>(Lifestyle.Singleton);
         container.Register<MainViewModel>(Lifestyle.Singleton);
         container.Register<MainView>(Lifestyle.Singleton);
-        container.Register<LoginViewModel>();
-        container.Register<RegisterViewModel>();
-        container.Register<UserListViewModel>();
-        container.Register<UserPostWallViewModel>();
+        container.Collection.Register<BaseViewModel>(typeof(BaseViewModel).Assembly); // batch-registration
         container.Register<SocialMediaDbContext>(Lifestyle.Scoped);
         container.Register(typeof(IRepository<>), 
             typeof(SocialMediaRepository<>), Lifestyle.Scoped);

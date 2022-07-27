@@ -24,5 +24,6 @@ public class MyChatServer : IDisposable
     public void Dispose()
     {
         _server.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
