@@ -6,8 +6,20 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SocialMediaUser.Views.UserPostWallView"
              x:DataType="vm:UserPostWallViewModel">
-    <Grid>
-        <Button Content="Cancel" VerticalAlignment="Center"
-                HorizontalAlignment="Center" Command="{CompiledBinding CancelCommand}"/>
+    <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, 1, *">
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{CompiledBinding Title}"
+                   FontSize="24"/>
+        <ListBox Grid.Row="1" Grid.Column="0" Items="{CompiledBinding Comments}"
+                 VerticalAlignment="Stretch" Background="Transparent" SelectionMode="Single"/>
+        <GridSplitter Grid.Row="1" Grid.Column="1" ResizeDirection="Columns"/>
+        <Grid Grid.Row="1" Grid.Column="2">
+            
+        </Grid>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Center" 
+                    HorizontalAlignment="Center">
+            <Button Content="Add comment" HorizontalAlignment="Stretch"/>
+            <Button Content="Cancel" HorizontalAlignment="Stretch" 
+                    Command="{CompiledBinding CancelCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -17,4 +17,6 @@ public class SocialMediaDbContext : DbContext
     }
     
     public DbSet<User> Users => Set<User>();
+
+    public DbSet<Comment> Comments => Set<Comment>();
 }

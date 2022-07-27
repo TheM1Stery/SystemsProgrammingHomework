@@ -52,7 +52,7 @@ public partial class App : Application
 
     private static Func<BaseViewModel> CreateProducer<T>(Container container)
         where T : BaseViewModel => Lifestyle.Transient.CreateProducer<BaseViewModel, T>(container).GetInstance;
-
+    
     // Creates container
     private Container Bootstrap()
     {
