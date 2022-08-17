@@ -1,6 +1,14 @@
-﻿namespace CustomerDb.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MVVMUtils;
 
-public class BaseViewModel
+namespace CustomerDb.ViewModels;
+
+public abstract class BaseViewModel : ObservableObject
 {
-    
+    protected INavigationService<BaseViewModel> NavigationService;
+
+    public BaseViewModel(INavigationService<BaseViewModel> navigationService)
+    {
+        NavigationService = navigationService;
+    }
 }

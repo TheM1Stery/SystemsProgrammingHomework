@@ -12,7 +12,7 @@ public class NavigationService<TBaseViewModel> : INavigationService<TBaseViewMod
         _factory = factory;
     }
 
-    public void Navigate<TViewModel>() where TViewModel : TBaseViewModel
+    public void Navigate<TViewModel>() where TViewModel : class, TBaseViewModel
     {
         _store.CurrentViewModel = _factory.Create<TViewModel>();
     }

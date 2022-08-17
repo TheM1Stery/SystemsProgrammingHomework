@@ -1,0 +1,62 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:CustomerDb.ViewModels"
+             xmlns:models="clr-namespace:CustomerDb.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ie="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             x:CompileBindings="True"
+             x:Class="CustomerDb.Views.CustomerListView"
+             x:DataType="viewModels:CustomerListViewModel">
+    <Grid RowDefinitions="0.200*, 0.100*,3*, 0.200*">
+        <i:Interaction.Behaviors>
+            <ie:EventTriggerBehavior EventName="Initialized">
+                <ie:InvokeCommandAction Command="{Binding InitializedCommand}"/>
+            </ie:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
+        <Grid Grid.Row="0" ColumnDefinitions="*, 0.1*" HorizontalAlignment="Stretch">
+            <TextBox Grid.Column="0" HorizontalAlignment="Stretch" Margin="5" 
+                     Text="{Binding SearchString}"
+                     Watermark="Enter text.."/>
+            <Button Grid.Column="1" Content="Search" Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding SearchCommand}"/>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <ComboBox Items="{Binding Pages}" 
+                      HorizontalAlignment="Center"
+                      PlaceholderText="Select page"
+                      SelectedItem="{Binding SelectedPage}" MaxDropDownHeight="150"/>
+        </StackPanel>
+        <DataGrid Grid.Row="2" Items="{Binding Customers}"  AutoGenerateColumns="False" 
+                  Margin="0 15 0 0" IsReadOnly="True" CanUserSortColumns="True" 
+                  CanUserReorderColumns="True" CanUserResizeColumns="True"
+                  SelectedItem="{Binding SelectedCustomer}" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First name" x:DataType="models:Customer" 
+                                    Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Last name" x:DataType="models:Customer" 
+                                    Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Email" x:DataType="models:Customer" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Age" x:DataType="models:Customer" Binding="{Binding Age}"/>
+                <DataGridTextColumn Header="Gender" x:DataType="models:Customer" Binding="{Binding Gender}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Grid Grid.Row="3" ColumnDefinitions="*, *, *" HorizontalAlignment="Stretch" >
+            <Button Grid.Column="0" Content="Add"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
+                    Margin="1 2"/>
+            <Button Grid.Column="1" Content="Edit"
+                    Command="{Binding EditCommand}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
+                    Margin="1 2"/>
+            <Button Grid.Column="2" Content="Remove" 
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
+                    Margin="1 2"
+                    Command="{Binding DeleteCommand}"/>
+        </Grid>
+    </Grid>
+</UserControl>

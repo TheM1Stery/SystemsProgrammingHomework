@@ -2,10 +2,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:CustomerDb.ViewModels"
+        xmlns:local="clr-namespace:CustomerDb"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CustomerDb.Views.MainView"
         x:CompileBindings="True"
-        
-        Title="MainView">
-    Welcome to Avalonia!
+        x:DataType="viewModels:MainViewModel"
+        ExtendClientAreaToDecorationsHint="True"
+        Background="Transparent"
+        Title="{Binding Title}"
+        TransparencyLevelHint="AcrylicBlur">
+    <Window.DataTemplates>
+        <local:ViewLocator/>
+    </Window.DataTemplates>
+    <Grid RowDefinitions="Auto, *">
+        <ExperimentalAcrylicBorder Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial BackgroundSource="Digger"
+                                             TintColor="Black"
+                                             TintOpacity="1"
+                                             MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <ExperimentalAcrylicBorder Grid.Row="0" IsHitTestVisible="False" MinHeight="30">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial BackgroundSource="Digger"
+                                             TintColor="DarkRed"
+                                             TintOpacity="1"
+                                             MaterialOpacity="0.65"/>
+            </ExperimentalAcrylicBorder.Material>
+            <TextBlock Text="{Binding Title}" HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#1AFF9C"
+                       IsHitTestVisible="False"/>
+        </ExperimentalAcrylicBorder>
+        <TransitioningContentControl Grid.Row="1" Content="{Binding Store.CurrentViewModel}"/>
+    </Grid>
 </Window>
