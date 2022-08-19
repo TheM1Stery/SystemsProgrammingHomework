@@ -21,6 +21,7 @@ public class CustomerDbClient : ICustomerDbClient
     public async Task ConnectAsync()
     {
         await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync();
     }
 
     public async Task AddCustomerAsync(Customer customer)
@@ -56,7 +57,7 @@ public class CustomerDbClient : ICustomerDbClient
         return customer;
     }
 
-    public async Task<IEnumerable<Customer>> SearchCustomers(string searchString)
+    public async Task<IEnumerable<Customer>> SearchCustomersAsync(string searchString)
     {
         await using var connection = new SqlConnection(_connectionString);
         var parameter = $"{searchString}%";
@@ -67,10 +68,10 @@ public class CustomerDbClient : ICustomerDbClient
         return customers;
     }
 
-    public async Task<IEnumerable<Customer>> GetCustomersByPage(int page, int customerPerPage)
+    public async Task<IEnumerable<Customer>> GetCustomersByPageAsync(int page, int customerPerPage)
     {
         await using var connection = new SqlConnection(_connectionString);
-        var count = await GetCustomerCount();
+        var count = await GetCustomerCountAsync();
         var pageCount = (int)Math.Ceiling(count / (double)customerPerPage);
         if (page > pageCount)
         {
@@ -84,9 +85,17 @@ public class CustomerDbClient : ICustomerDbClient
         return customers;
     }
 
-    public async Task<int> GetCustomerCount()
+    public async Task<int> GetCustomerCountAsync()
     {
         await using var connection = new SqlConnection(_connectionString);
         return await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Customers");
+    }
+
+    public async Task<bool> DoesEmailExistAsync(string email)
+    {
+        await using var connection = new SqlConnection(_connectionString);
+        var count = connection.ExecuteScalar<int>("SELECT COUNT(1) FROM Customers WHERE Email = @Email",
+            new {Email = email});
+        return count > 0;
     }
 }

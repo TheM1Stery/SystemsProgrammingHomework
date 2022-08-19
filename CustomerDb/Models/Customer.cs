@@ -1,17 +1,42 @@
-﻿namespace CustomerDb.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-public class Customer
+namespace CustomerDb.Models;
+
+public partial class Customer : ObservableValidator
 {
     public int Id { get; set; }
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required]
+    [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Field FirstName must not have letters")]
+    private string? _firstName;
     
-    public string? FirstName { get; set; }
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required]
+    [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Field LastName must not have letters")]
+    private string? _lastName;
     
-    public string? LastName { get; set; }
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required]
+    [EmailAddress]
+    private string? _email;
     
-    public string? Email { get; set; }
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required]
+    private Gender? _gender;
     
-    public Gender? Gender { get; set; }
-    
-    public int Age { get; set; }
-    
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required]
+    [Range(16, 120)]
+    private int? _age;
 }

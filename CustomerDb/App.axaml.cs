@@ -4,6 +4,8 @@ using System.Net.Http;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using CustomerDb.Models;
 using CustomerDb.Services;
@@ -34,14 +36,12 @@ namespace CustomerDb
         public override void OnFrameworkInitializationCompleted()
         {
             Bootstrap();
+            // remove Avalonia validations, so that CommunityToolkitMVVM validations would work
+            ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainView
-                {
-                    DataContext = _container.GetInstance<MainViewModel>()
-                };
+                desktop.MainWindow = _container.GetInstance<MainView>();
             }
-
             base.OnFrameworkInitializationCompleted();
         }
 
@@ -50,6 +50,13 @@ namespace CustomerDb
         {
             _container.Options.AllowOverridingRegistrations = true;
             _container.Options.EnableAutoVerification = false;
+            _container.RegisterSingleton<MainView>();
+            _container.RegisterInitializer<MainView>(x =>
+            {
+                var vm = _container.GetInstance<MainViewModel>();
+                vm.Close += x.Close;
+                x.DataContext = vm;
+            });
             _container.Register<INavigationService<BaseViewModel>, NavigationService<BaseViewModel>>(Lifestyle.Singleton);
             _container.Register<INavigationStore<BaseViewModel>, NavigationStore>(Lifestyle.Singleton);
             _container.Register<IViewModelFactory<BaseViewModel>, ViewModelFactory<BaseViewModel>>(Lifestyle.Singleton);
@@ -58,17 +65,11 @@ namespace CustomerDb
                 _container.Register(reg);
             }
             _container.Register<MainViewModel>(Lifestyle.Singleton);
-
             var config = new ConfigurationBuilder().SetBasePath(Environment.CurrentDirectory)
                 .AddJsonFile("appsettings.json").Build();
             var connectionString = config.GetConnectionString("SqlConnection");
-            if (connectionString is null)
-            {
-                MessageBoxManager.GetMessageBoxStandardWindow("Error", "Couldn't get connection string", ButtonEnum.Ok,
-                    Icon.Error, WindowStartupLocation.CenterScreen).Show();
-                return;
-            }
-            _container.RegisterSingleton<ICustomerDbClient>(() => new CustomerDbClient(connectionString));
+            _container.RegisterSingleton<ICustomerDbClient>(() => new CustomerDbClient(connectionString!));
+            _container.RegisterSingleton<IModalMessageBox, ModalMessageBox>();
         }
     }
 }

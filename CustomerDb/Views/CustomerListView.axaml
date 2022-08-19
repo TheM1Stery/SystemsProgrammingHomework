@@ -48,7 +48,8 @@
         <Grid Grid.Row="3" ColumnDefinitions="*, *, *" HorizontalAlignment="Stretch" >
             <Button Grid.Column="0" Content="Add"
                     HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 
-                    Margin="1 2"/>
+                    Margin="1 2"
+                    Command="{Binding AddCommand}"/>
             <Button Grid.Column="1" Content="Edit"
                     Command="{Binding EditCommand}"
                     HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" 

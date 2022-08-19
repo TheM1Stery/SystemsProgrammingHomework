@@ -16,11 +16,13 @@ public interface ICustomerDbClient
 
     public Task<Customer?> GetCustomerByIdAsync(int id);
 
-    public Task<IEnumerable<Customer>> SearchCustomers(string searchString);
+    public Task<IEnumerable<Customer>> SearchCustomersAsync(string searchString);
 
 
-    public Task<IEnumerable<Customer>> GetCustomersByPage(int page, int customerPerPage);
+    public Task<IEnumerable<Customer>> GetCustomersByPageAsync(int page, int customerPerPage);
 
-    public Task<int> GetCustomerCount();
+    public Task<int> GetCustomerCountAsync();
+
+    public Task<bool> DoesEmailExistAsync(string Email);
 
 }

@@ -15,7 +15,9 @@
         <entry key="CustomerDB/App.axaml" value="CustomerDB/CustomerDB.csproj" />
         <entry key="CustomerDb/App.axaml" value="CustomerDb/CustomerDb.csproj" />
         <entry key="CustomerDb/MainWindow.axaml" value="CustomerDb/CustomerDb.csproj" />
+        <entry key="CustomerDb/Views/AddCustomerView.axaml" value="CustomerDb/CustomerDb.csproj" />
         <entry key="CustomerDb/Views/CustomerListView.axaml" value="CustomerDb/CustomerDb.csproj" />
+        <entry key="CustomerDb/Views/EditCustomerView.axaml" value="CustomerDb/CustomerDb.csproj" />
         <entry key="CustomerDb/Views/MainView.axaml" value="CustomerDb/CustomerDb.csproj" />
         <entry key="MultiThreadedFileReaded/MainWindow.axaml" value="MultiThreadedFileReaded/MultiThreadedFileReaded.csproj" />
         <entry key="MultiThreadedFileReader/App.axaml" value="MultiThreadedFileReader/MultiThreadedFileReader.csproj" />
