@@ -31,9 +31,9 @@
         </ExperimentalAcrylicBorder>
         <ae:TextEditor MinHeight="200" WordWrap="True"
                  VerticalAlignment="Top"
-                 IsReadOnly="True"
                  Margin="5 10 5 30"
-                 FontSize="16">
+                 FontSize="16"
+                 IsEnabled="False">
             <i:Interaction.Behaviors>
                 <models:DocumentTextBindingBehavior Text="{CompiledBinding Message, Mode=TwoWay}"/>
             </i:Interaction.Behaviors>

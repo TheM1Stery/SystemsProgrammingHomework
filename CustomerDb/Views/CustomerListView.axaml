@@ -35,6 +35,8 @@
                   CanUserReorderColumns="True" CanUserResizeColumns="True"
                   SelectedItem="{Binding SelectedCustomer}" SelectionMode="Single">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" x:DataType="models:Customer"
+                                    Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="First name" x:DataType="models:Customer" 
                                     Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Last name" x:DataType="models:Customer" 

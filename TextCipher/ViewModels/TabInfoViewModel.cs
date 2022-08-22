@@ -34,6 +34,8 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
 
     private bool _isCyphered;
 
+
+    
   
     
     private void ThreadMethod(object? state)
@@ -44,21 +46,24 @@ public partial class TabInfoViewModel : BaseViewModel, IRecipient<ValueChangedMe
         _semaphore.WaitOne();
         if (Message == "Couldn't get the message. But it can be cyphered..")
             MessageLength = _textFileGetterService.GetTextLength(EncryptionArgs.FromPath);
-        _encryptionService.OnOnePercent += i =>
-        {
-            Progress = i;
-        };
+        _encryptionService.OnOnePercent += EncryptionServiceOnOnOnePercent;
         using var from = new FileStream(EncryptionArgs.FromPath, FileMode.Open, FileAccess.Read,
             FileShare.Read);
-        using var to = new FileStream(EncryptionArgs.ToPath, FileMode.OpenOrCreate);
+        using var to = new FileStream(EncryptionArgs.ToPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
         _encryptionService.Encrypt(from, to, EncryptionArgs.Key);
         from.Close();
         to.Close();
         Message = _textFileGetterService.GetText(EncryptionArgs.ToPath) ?? "Cypher was done successfully";
         _semaphore.Release();
+        _encryptionService.OnOnePercent -= EncryptionServiceOnOnOnePercent;
     }
-    
-    
+
+    private void EncryptionServiceOnOnOnePercent(int progress)
+    {
+        Progress = progress;
+    }
+
+
     public TabInfoViewModel(IEncryptionService encryptionService, ITextFileGetterService textFileGetterService,
         ISemaphoreWrapper semaphore)
     {

@@ -22,7 +22,7 @@ public partial class EditCustomerViewModel : BaseViewModel
     [ObservableProperty] 
     private Customer _customer;
 
-    private string? _oldEmail;
+    private readonly string? _oldEmail;
     
     
     [ObservableProperty]

@@ -17,9 +17,8 @@ public class CaesarCypherEncryptionService : IEncryptionService
     public void Encrypt(FileStream fromStream, FileStream toStream, int key)
     {
         int character;
-
-        var from = new StreamReader(fromStream);
-        var to = new StreamWriter(toStream);
+        using var from = new StreamReader(fromStream);
+        using var to = new StreamWriter(toStream);
         var onePercent = _service.GetTextLength(fromStream.Name) / 100.0;
         var progress = 0;
         var tempProgress = 0;

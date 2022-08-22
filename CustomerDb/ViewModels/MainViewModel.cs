@@ -1,7 +1,6 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using CustomerDb.Models;
 using CustomerDb.Services;
 using MVVMUtils;
@@ -27,7 +26,7 @@ public partial class MainViewModel : BaseViewModel, IWindowCloser, IRecipient<Si
     public Action? Close { get; set; }
     public void Receive(SignalCloseMessage message)
     {
-        Close?.Invoke();
         StrongReferenceMessenger.Default.Unregister<SignalCloseMessage>(this);
+        Close?.Invoke();
     }
 }

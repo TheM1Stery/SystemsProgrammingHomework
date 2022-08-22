@@ -17,11 +17,14 @@ using MVVMUtils;
 
 namespace CustomerDb.ViewModels;
 
+
 public partial class CustomerListViewModel : BaseViewModel, IRecipient<RequestMessage<Customer>>
 {
     private readonly ICustomerDbClient _dbClient;
     private readonly IModalMessageBox _modalMessageBox;
 
+
+    
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SearchCommand))]
     private string? _searchString;
@@ -75,13 +78,12 @@ public partial class CustomerListViewModel : BaseViewModel, IRecipient<RequestMe
                 ContentMessage = "Couldn't connect to the database. Please check your connection " +
                                  "\nor your connection string in appsettings.json",
                 ShowInCenter = true,
+                ContentTitle = "Error",
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             });
             StrongReferenceMessenger.Default.Send(new SignalCloseMessage());
             return;
         }
-        
-        
         var count = await _dbClient.GetCustomerCountAsync();
         var pageCount = (int)Math.Ceiling(count / 100.0);
         Pages = new ObservableCollection<int>(Enumerable.Range(1, pageCount));
@@ -116,7 +118,7 @@ public partial class CustomerListViewModel : BaseViewModel, IRecipient<RequestMe
 
     public void Receive(RequestMessage<Customer> message)
     {
-        message.Reply(_selectedCustomer!);
         StrongReferenceMessenger.Default.Unregister<RequestMessage<Customer>>(this);
+        message.Reply(_selectedCustomer!);
     }
 }
