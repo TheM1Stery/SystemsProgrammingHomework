@@ -49,32 +49,32 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
+    private static Func<BaseViewModel> CreateProducer<T>(Container container, Lifestyle lifestyle)
+        where T : BaseViewModel => lifestyle.CreateProducer<BaseViewModel, T>(container).GetInstance;
 
-    private static Func<BaseViewModel> CreateProducer<T>(Container container)
-        where T : BaseViewModel => Lifestyle.Transient.CreateProducer<BaseViewModel, T>(container).GetInstance;
-    
     // Creates container
     private Container Bootstrap()
     {
         var container = new Container();
         container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+        container.Options.EnableAutoVerification = false;
         container.Register<INavigationStore<BaseViewModel>, NavigationStore<BaseViewModel>>(Lifestyle.Singleton);
         container.Register<RegistrationModel>();
         container.RegisterSingleton<IViewModelFactory<BaseViewModel>>(() =>
         {
             var factory = new ViewModelFactory<BaseViewModel>(new Dictionary<Type, Func<BaseViewModel>>()
             {
-                [typeof(LoginViewModel)] = CreateProducer<LoginViewModel>(container),
-                [typeof(RegisterViewModel)] =  CreateProducer<RegisterViewModel>(container),
-                [typeof(UserListViewModel)] = CreateProducer<UserListViewModel>(container),
-                [typeof(UserPostWallViewModel)] = CreateProducer<UserPostWallViewModel>(container)
+                [typeof(LoginViewModel)] = CreateProducer<LoginViewModel>(container, Lifestyle.Transient),
+                [typeof(RegisterViewModel)] =  CreateProducer<RegisterViewModel>(container, Lifestyle.Transient),
+                [typeof(UserListViewModel)] = CreateProducer<UserListViewModel>(container, Lifestyle.Transient),
+                [typeof(UserPostWallViewModel)] = CreateProducer<UserPostWallViewModel>(container, Lifestyle.Transient),
+                [typeof(CreateCommentViewModel)] = CreateProducer<CreateCommentViewModel>(container, Lifestyle.Transient)
             });
             return factory;
         });
         container.Register<INavigationService<BaseViewModel>, NavigationService<BaseViewModel>>(Lifestyle.Singleton);
         container.Register<MainViewModel>(Lifestyle.Singleton);
         container.Register<MainView>(Lifestyle.Singleton);
-        container.Collection.Register<BaseViewModel>(typeof(BaseViewModel).Assembly); // batch-registration
         container.Register<SocialMediaDbContext>(Lifestyle.Scoped);
         container.Register(typeof(IRepository<>), 
             typeof(SocialMediaRepository<>), Lifestyle.Scoped);
@@ -85,7 +85,6 @@ public partial class App : Application
         });
         container.RegisterDecorator(typeof(IRepository<>), typeof(RepositoryProxy<>),
             Lifestyle.Singleton);
-        container.Verify();
         return container;
     }
 }

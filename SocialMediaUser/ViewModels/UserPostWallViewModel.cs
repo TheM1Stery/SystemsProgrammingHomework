@@ -8,7 +8,7 @@ using SocialMediaUser.Services;
 
 namespace SocialMediaUser.ViewModels;
 
-public partial class UserPostWallViewModel : BaseViewModel, IRecipient<ValueChangedMessage<User>>
+public partial class UserPostWallViewModel : BaseViewModel, IRecipient<RequestMessage<Comment>>
 {
     private readonly IRepository<Comment> _commentRepository;
 
@@ -16,30 +16,44 @@ public partial class UserPostWallViewModel : BaseViewModel, IRecipient<ValueChan
 
     [ObservableProperty]
     private string? _title;
-
-
+    
     [ObservableProperty]
     private ObservableCollection<Comment>? _comments;
+
+    [ObservableProperty]
+    private Comment? _selectedComment;
+
+    [ObservableProperty]
+    private CommentInfoViewModel? _currentComment;
 
 
     public UserPostWallViewModel(IRepository<Comment> commentRepository,
         INavigationService<BaseViewModel> navigation) : base(navigation)
     {
         _commentRepository = commentRepository;
-        WeakReferenceMessenger.Default.Register(this);
+        _user = StrongReferenceMessenger.Default.Send(new RequestMessage<User>());
+        Title = $"{_user.FullName}'s wall";
+        Comments = new ObservableCollection<Comment>(_commentRepository.Find(
+            x => x.UserId == _user.Id));
+        StrongReferenceMessenger.Default.Register(this);
     }
 
     [RelayCommand]
     private void Cancel()
     {
         Navigator.Navigate<UserListViewModel>();
+        StrongReferenceMessenger.Default.Unregister<RequestMessage<Comment>>(this);
     }
 
-    public void Receive(ValueChangedMessage<User> message)
+    public void Receive(RequestMessage<Comment> message)
     {
-        _user = message.Value;
-        Title = $"{_user.FullName}'s wall";
-        Comments = new ObservableCollection<Comment>(_commentRepository.Find(
-            x => x.UserId == _user.Id));
+        if (_selectedComment != null) 
+            message.Reply(_selectedComment);
+    }
+
+    [RelayCommand]
+    private void ShowComment()
+    {
+        CurrentComment = new CommentInfoViewModel(Navigator);
     }
 }

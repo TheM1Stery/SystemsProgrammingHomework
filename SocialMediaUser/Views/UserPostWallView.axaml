@@ -5,15 +5,24 @@
              xmlns:vm="clr-namespace:SocialMediaUser.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SocialMediaUser.Views.UserPostWallView"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ie="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              x:DataType="vm:UserPostWallViewModel">
     <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, 1, *">
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{CompiledBinding Title}"
                    FontSize="24"/>
         <ListBox Grid.Row="1" Grid.Column="0" Items="{CompiledBinding Comments}"
-                 VerticalAlignment="Stretch" Background="Transparent" SelectionMode="Single"/>
+                 VerticalAlignment="Stretch" Background="Transparent" SelectionMode="Single"
+                 SelectedItem="{CompiledBinding SelectedComment}">
+            <i:Interaction.Behaviors>
+                <ie:EventTriggerBehavior EventName="DoubleTapped">
+                    <ie:InvokeCommandAction Command="{CompiledBinding }"/>
+                </ie:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </ListBox>
         <GridSplitter Grid.Row="1" Grid.Column="1" ResizeDirection="Columns"/>
         <Grid Grid.Row="1" Grid.Column="2">
-            
+            <TransitioningContentControl Content="{CompiledBinding CurrentComment}"/>
         </Grid>
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Center" 
                     HorizontalAlignment="Center">

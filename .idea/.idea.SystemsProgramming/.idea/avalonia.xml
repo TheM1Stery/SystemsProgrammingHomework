@@ -33,6 +33,9 @@
         <entry key="SocialMediaUser/App.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/MainWindow.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/ViewModels/UserPostWallViewModel.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
+        <entry key="SocialMediaUser/Views/AddCommentView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
+        <entry key="SocialMediaUser/Views/CommentInfoView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
+        <entry key="SocialMediaUser/Views/CreateCommentView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/GoodbyeWorldView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/HelloWorldView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
         <entry key="SocialMediaUser/Views/LoginView.axaml" value="SocialMediaUser/SocialMediaUser.csproj" />
