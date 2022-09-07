@@ -29,7 +29,7 @@
                                              MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <ae:TextEditor MinHeight="200" WordWrap="True"
+        <ae:TextEditor  WordWrap="True"
                  VerticalAlignment="Top"
                  Margin="5 10 5 30"
                  FontSize="16"
