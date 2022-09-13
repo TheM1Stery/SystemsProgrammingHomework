@@ -34,7 +34,7 @@ namespace TextCipher
             {
                 return new TabFactory(() => container.GetInstance<TabInfoViewModel>());
             });
-            container.Register<IEncryptionService, CaesarCypherEncryptionService>(Lifestyle.Singleton);
+            container.Register<IEncryptionService, CaesarCypherEncryptionService>(Lifestyle.Transient);
             container.Register<ISemaphoreWrapper, SemaphoreWrapper>(Lifestyle.Singleton);
             container.Register<TabInfoViewModel>(Lifestyle.Transient);
 
