@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -78,5 +79,9 @@ public partial class UserListViewModel : BaseViewModel, IRecipient<RequestMessag
         if (_selectedUser != null) 
             message.Reply(_selectedUser);
         StrongReferenceMessenger.Default.Unregister<RequestMessage<User>>(this);
+    }
+    public void Salam()
+    {
+        Console.WriteLine("privet");
     }
 }
