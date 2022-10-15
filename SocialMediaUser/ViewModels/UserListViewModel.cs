@@ -84,4 +84,9 @@ public partial class UserListViewModel : BaseViewModel, IRecipient<RequestMessag
     {
         Console.WriteLine("privet");
     }
+
+    public void SalamTwo()
+    {
+        Console.WriteLine("poka");
+    }
 }
